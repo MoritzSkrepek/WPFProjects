@@ -79,7 +79,7 @@
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                <TextBlock Text="Releasing" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
                                 <CheckBox>
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
