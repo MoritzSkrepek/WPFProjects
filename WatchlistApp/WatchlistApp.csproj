@@ -15,7 +15,7 @@
 
   <ItemGroup>
     <None Update="WatchlistDatabase.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

@@ -16,16 +16,7 @@
             <RowDefinition Height="9*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem Header="Watchlist">
-                <MenuItem Header="Watchlist hinzufügen"></MenuItem>
-                <MenuItem Header="Watchlist entfernen"></MenuItem>
-            </MenuItem>
-            <MenuItem Header="Show">
-                <MenuItem Header="Show zu Watchlist hinzufügen"></MenuItem>
-                <MenuItem Header="Show aus Watchlist entfernen"></MenuItem>
-            </MenuItem>
-        </Menu>
+        <Button Content="Neue Watchlist" Grid.Row="0" Grid.Column="0" Click="AddWatchlist"/>
 
         <StackPanel Orientation="Horizontal" Grid.Column="1">
             <Label Content="Filter"></Label>
@@ -34,12 +25,17 @@
                 <ComboBoxItem Content="Ja"></ComboBoxItem>
                 <ComboBoxItem Content="Nein"></ComboBoxItem>
             </ComboBox>
+            <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow"/>
         </StackPanel>
-        
+
         <ListBox x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" SelectionChanged="WatchlistSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" FontSize="16" Margin="5"></TextBlock>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="Delete" Margin="5,0,0,0" VerticalAlignment="Center" Click="DeleteWatchlist"/>
+                        <TextBlock Text="{Binding Name}" FontSize="16" Margin="5" VerticalAlignment="Center" />
+                        <Button Content="+" VerticalAlignment="Center" Margin="5,0,0,0" HorizontalAlignment="Stretch" Click="AddShowToWatchlist" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
@@ -77,6 +73,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
                                 <ColumnDefinition Width="auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" Grid.Column="0">
                                 <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -114,6 +111,7 @@
                                     </CheckBox.Style>
                                 </CheckBox>
                             </StackPanel>
+                            <Button Content="-" VerticalAlignment="Center" Grid.Column="2" Click="RemoveShowFromWatchlist"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

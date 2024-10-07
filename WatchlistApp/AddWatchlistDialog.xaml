@@ -1,0 +1,19 @@
+﻿<Window x:Class="WatchlistApp.AddWatchlistDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WatchlistApp"
+        mc:Ignorable="d"
+        Title="AddWatchlistDialog" Height="auto" Width="auto">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Watchlist Name" Grid.Column="0"/>
+        <TextBox x:Name="new_watchlist_field" Grid.Column="1"/>
+        <Button Content="Hinzufügen" Grid.Column="2" Click="AddWatchlistToDatebase" />
+    </Grid>
+</Window>

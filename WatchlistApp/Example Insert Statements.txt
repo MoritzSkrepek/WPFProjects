@@ -6,59 +6,59 @@ INSERT INTO Watchlist VALUES (4, 'Komödien');
 INSERT INTO Watchlist VALUES (5, 'Klassiker');
 
 /* Insert statements for shows */
-INSERT INTO Show VALUES (1, 'Breaking Bad', 'Ein Chemielehrer wird zum Drogenkoch.', '2008-01-20', 0, 'breaking_bad_image.jpg');
-INSERT INTO Show VALUES (2, 'Stranger Things', 'Kinder entdecken eine geheime Welt.', '2016-07-15', 1, 'stranger_things_image.jpg');
-INSERT INTO Show VALUES (3, 'Demon Slayer', 'Samurai gegen Dämonen.', '2020-01-01', 0, 'demon_slayer_image.jpg');
-INSERT INTO Show VALUES (4, 'The Office', 'Das tägliche Leben in einem Büro.', '2005-03-24', 0, 'the_office_image.jpg');
-INSERT INTO Show VALUES (5, 'Friends', 'Das Leben von sechs Freunden in New York.', '1994-09-22', 0, 'friends_image.jpg');
-INSERT INTO Show VALUES (6, 'Blade Runner', 'Ein Blade Runner jagt Replikanten.', '1982-06-25', 0, 'blade_runner_image.jpg');
-INSERT INTO Show VALUES (7, 'The Mandalorian', 'Ein Kopfgeldjäger im Star Wars Universum.', '2019-11-12', 1, 'mandalorian_image.jpg');
-INSERT INTO Show VALUES (8, 'Ghost in the Shell', 'Eine Zukunft voller Cyberpunk und Androiden.', '1995-11-18', 0, 'ghost_in_the_shell_image.jpg');
-INSERT INTO Show VALUES (9, 'Monty Python and the Holy Grail', 'Die Geschichte der Ritter der Tafelrunde.', '1975-03-14', 0, 'monty_python_image.jpg');
-INSERT INTO Show VALUES (10, 'Superbad', 'Zwei Teenager auf der Suche nach einem guten Abend.', '2007-08-17', 0, 'superbad_image.jpg');
-INSERT INTO Show VALUES (11, 'Pulp Fiction', 'Verschiedene, miteinander verbundene Geschichten aus der Unterwelt.', '1994-10-14', 0, 'pulp_fiction_image.jpg');
-INSERT INTO Show VALUES (12, 'Back to the Future', 'Ein Teenager reist in die Vergangenheit.', '1985-07-03', 0, 'back_to_the_future_image.jpg');
-INSERT INTO Show VALUES (13, 'Akira', 'Eine futuristische Geschichte in Neo-Tokyo.', '1988-07-16', 0, 'akira_image.jpg');
-INSERT INTO Show VALUES (14, 'Naruto', 'Ein junger Ninja auf dem Weg, Hokage zu werden.', '2002-10-03', 0, 'naruto_image.jpg');
-INSERT INTO Show VALUES (15, 'My Hero Academia', 'Eine Welt voller Helden und Schurken.', '2016-04-03', 1, 'my_hero_academia_image.jpg');
-INSERT INTO Show VALUES (16, 'Seinfeld', 'Das Leben von Jerry Seinfeld und seinen Freunden.', '1989-07-05', 0, 'seinfeld_image.jpg');
-INSERT INTO Show VALUES (17, 'The Matrix', 'Ein Hacker entdeckt die Wahrheit über seine Realität.', '1999-03-31', 0, 'the_matrix_image.jpg');
-INSERT INTO Show VALUES (18, 'Cowboy Bebop', 'Ein Kopfgeldjäger und sein Team im Weltraum.', '1998-04-03', 0, 'cowboy_bebop_image.jpg');
-INSERT INTO Show VALUES (19, 'Parks and Recreation', 'Das Leben in einer kleinen amerikanischen Stadt.', '2009-04-09', 0, 'parks_and_rec_image.jpg');
-INSERT INTO Show VALUES (20, 'The Godfather', 'Die Geschichte der Familie Corleone.', '1972-03-24', 0, 'the_godfather_image.jpg');
-INSERT INTO Show VALUES (21, 'The Shining', 'Ein Schriftsteller verliert in einem verlassenen Hotel den Verstand.', '1980-05-23', 0, 'the_shining_image.jpg');
-INSERT INTO Show VALUES (22, 'Neon Genesis Evangelion', 'Eine dystopische Zukunft mit riesigen Mechas.', '1995-10-04', 0, 'neon_genesis_evangelion_image.jpg');
-INSERT INTO Show VALUES (23, 'Bojack Horseman', 'Ein Pferd und seine Midlife-Crisis.', '2014-08-22', 0, 'bojack_horseman_image.jpg');
-INSERT INTO Show VALUES (24, 'Futurama', 'Ein Mann erwacht 1000 Jahre in der Zukunft.', '1999-03-28', 0, 'futurama_image.jpg');
-INSERT INTO Show VALUES (25, 'Casablanca', 'Eine Liebesgeschichte im Zweiten Weltkrieg.', '1942-11-26', 0, 'casablanca_image.jpg');
+INSERT INTO Show VALUES (1, 'Breaking Bad', 'Ein Chemielehrer wird zum Drogenkoch.', '2008-01-20', 0, 'breaking_bad_image.jpg', 1);
+INSERT INTO Show VALUES (2, 'Stranger Things', 'Kinder entdecken eine geheime Welt.', '2016-07-15', 1, 'stranger_things_image.jpg', 1);
+INSERT INTO Show VALUES (3, 'Demon Slayer', 'Samurai gegen Dämonen.', '2020-01-01', 0, 'demon_slayer_image.jpg', 0);
+INSERT INTO Show VALUES (4, 'The Office', 'Das tägliche Leben in einem Büro.', '2005-03-24', 0, 'the_office_image.jpg', 1);
+INSERT INTO Show VALUES (5, 'Friends', 'Das Leben von sechs Freunden in New York.', '1994-09-22', 0, 'friends_image.jpg', 1);
+INSERT INTO Show VALUES (6, 'Blade Runner', 'Ein Blade Runner jagt Replikanten.', '1982-06-25', 0, 'blade_runner_image.jpg', 0);
+INSERT INTO Show VALUES (7, 'The Mandalorian', 'Ein Kopfgeldjäger im Star Wars Universum.', '2019-11-12', 1, 'mandalorian_image.jpg', 1);
+INSERT INTO Show VALUES (8, 'Ghost in the Shell', 'Eine Zukunft voller Cyberpunk und Androiden.', '1995-11-18', 0, 'ghost_in_the_shell_image.jpg', 1);
+INSERT INTO Show VALUES (9, 'Monty Python and the Holy Grail', 'Die Geschichte der Ritter der Tafelrunde.', '1975-03-14', 0, 'monty_python_image.jpg', 1);
+INSERT INTO Show VALUES (10, 'Superbad', 'Zwei Teenager auf der Suche nach einem guten Abend.', '2007-08-17', 0, 'superbad_image.jpg', 1);
+INSERT INTO Show VALUES (11, 'Pulp Fiction', 'Verschiedene, miteinander verbundene Geschichten aus der Unterwelt.', '1994-10-14', 0, 'pulp_fiction_image.jpg', 0);
+INSERT INTO Show VALUES (12, 'Back to the Future', 'Ein Teenager reist in die Vergangenheit.', '1985-07-03', 0, 'back_to_the_future_image.jpg', 0);
+INSERT INTO Show VALUES (13, 'Akira', 'Eine futuristische Geschichte in Neo-Tokyo.', '1988-07-16', 0, 'akira_image.jpg', 0);
+INSERT INTO Show VALUES (14, 'Naruto', 'Ein junger Ninja auf dem Weg, Hokage zu werden.', '2002-10-03', 0, 'naruto_image.jpg', 0);
+INSERT INTO Show VALUES (15, 'My Hero Academia', 'Eine Welt voller Helden und Schurken.', '2016-04-03', 1, 'my_hero_academia_image.jpg', 0);
+INSERT INTO Show VALUES (16, 'Seinfeld', 'Das Leben von Jerry Seinfeld und seinen Freunden.', '1989-07-05', 0, 'seinfeld_image.jpg', 0);
+INSERT INTO Show VALUES (17, 'The Matrix', 'Ein Hacker entdeckt die Wahrheit über seine Realität.', '1999-03-31', 0, 'the_matrix_image.jpg', 1);
+INSERT INTO Show VALUES (18, 'Cowboy Bebop', 'Ein Kopfgeldjäger und sein Team im Weltraum.', '1998-04-03', 0, 'cowboy_bebop_image.jpg', 1);
+INSERT INTO Show VALUES (19, 'Parks and Recreation', 'Das Leben in einer kleinen amerikanischen Stadt.', '2009-04-09', 0, 'parks_and_rec_image.jpg', 0);
+INSERT INTO Show VALUES (20, 'The Godfather', 'Die Geschichte der Familie Corleone.', '1972-03-24', 0, 'the_godfather_image.jpg', 0);
+INSERT INTO Show VALUES (21, 'The Shining', 'Ein Schriftsteller verliert in einem verlassenen Hotel den Verstand.', '1980-05-23', 0, 'the_shining_image.jpg', 1);
+INSERT INTO Show VALUES (22, 'Neon Genesis Evangelion', 'Eine dystopische Zukunft mit riesigen Mechas.', '1995-10-04', 0, 'neon_genesis_evangelion_image.jpg', 1);
+INSERT INTO Show VALUES (23, 'Bojack Horseman', 'Ein Pferd und seine Midlife-Crisis.', '2014-08-22', 0, 'bojack_horseman_image.jpg', 0);
+INSERT INTO Show VALUES (24, 'Futurama', 'Ein Mann erwacht 1000 Jahre in der Zukunft.', '1999-03-28', 0, 'futurama_image.jpg', 0);
+INSERT INTO Show VALUES (25, 'Casablanca', 'Eine Liebesgeschichte im Zweiten Weltkrieg.', '1942-11-26', 0, 'casablanca_image.jpg', 0);
 
 /* Insert statements for watchlistsshows */
-INSERT INTO WatchlistShow VALUES (1, 1);  -- 'Meine Lieblingsserien' enthält 'Breaking Bad'
-INSERT INTO WatchlistShow VALUES (1, 2);  -- 'Meine Lieblingsserien' enthält 'Stranger Things'
-INSERT INTO WatchlistShow VALUES (1, 4);  -- 'Meine Lieblingsserien' enthält 'The Office'
-INSERT INTO WatchlistShow VALUES (1, 5);  -- 'Meine Lieblingsserien' enthält 'Friends'
-INSERT INTO WatchlistShow VALUES (1, 16); -- 'Meine Lieblingsserien' enthält 'Seinfeld'
+INSERT INTO WatchlistShow VALUES (1, 1);  
+INSERT INTO WatchlistShow VALUES (1, 2); 
+INSERT INTO WatchlistShow VALUES (1, 4); 
+INSERT INTO WatchlistShow VALUES (1, 5);  
+INSERT INTO WatchlistShow VALUES (1, 16); 
 
-INSERT INTO WatchlistShow VALUES (2, 3);  -- 'Animes' enthält 'Demon Slayer'
-INSERT INTO WatchlistShow VALUES (2, 13); -- 'Animes' enthält 'Akira'
-INSERT INTO WatchlistShow VALUES (2, 14); -- 'Animes' enthält 'Naruto'
-INSERT INTO WatchlistShow VALUES (2, 15); -- 'Animes' enthält 'My Hero Academia'
-INSERT INTO WatchlistShow VALUES (2, 22); -- 'Animes' enthält 'Neon Genesis Evangelion'
+INSERT INTO WatchlistShow VALUES (2, 3);  
+INSERT INTO WatchlistShow VALUES (2, 13); 
+INSERT INTO WatchlistShow VALUES (2, 14); 
+INSERT INTO WatchlistShow VALUES (2, 15); 
+INSERT INTO WatchlistShow VALUES (2, 22); 
 
-INSERT INTO WatchlistShow VALUES (3, 6);  -- 'Sci-Fi Hits' enthält 'Blade Runner'
-INSERT INTO WatchlistShow VALUES (3, 7);  -- 'Sci-Fi Hits' enthält 'The Mandalorian'
-INSERT INTO WatchlistShow VALUES (3, 12); -- 'Sci-Fi Hits' enthält 'Back to the Future'
-INSERT INTO WatchlistShow VALUES (3, 17); -- 'Sci-Fi Hits' enthält 'The Matrix'
-INSERT INTO WatchlistShow VALUES (3, 18); -- 'Sci-Fi Hits' enthält 'Cowboy Bebop'
+INSERT INTO WatchlistShow VALUES (3, 6);  
+INSERT INTO WatchlistShow VALUES (3, 7);  
+INSERT INTO WatchlistShow VALUES (3, 12); 
+INSERT INTO WatchlistShow VALUES (3, 17); 
+INSERT INTO WatchlistShow VALUES (3, 18); 
 
-INSERT INTO WatchlistShow VALUES (4, 9);  -- 'Komödien' enthält 'Monty Python and the Holy Grail'
-INSERT INTO WatchlistShow VALUES (4, 10); -- 'Komödien' enthält 'Superbad'
-INSERT INTO WatchlistShow VALUES (4, 19); -- 'Komödien' enthält 'Parks and Recreation'
-INSERT INTO WatchlistShow VALUES (4, 23); -- 'Komödien' enthält 'Bojack Horseman'
-INSERT INTO WatchlistShow VALUES (4, 24); -- 'Komödien' enthält 'Futurama'
+INSERT INTO WatchlistShow VALUES (4, 9);  
+INSERT INTO WatchlistShow VALUES (4, 10);
+INSERT INTO WatchlistShow VALUES (4, 19); 
+INSERT INTO WatchlistShow VALUES (4, 23); 
+INSERT INTO WatchlistShow VALUES (4, 24); 
 
-INSERT INTO WatchlistShow VALUES (5, 11); -- 'Klassiker' enthält 'Pulp Fiction'
-INSERT INTO WatchlistShow VALUES (5, 20); -- 'Klassiker' enthält 'The Godfather'
-INSERT INTO WatchlistShow VALUES (5, 21); -- 'Klassiker' enthält 'The Shining'
-INSERT INTO WatchlistShow VALUES (5, 25); -- 'Klassiker' enthält 'Casablanca'
-INSERT INTO WatchlistShow VALUES (5, 8);  -- 'Klassiker' enthält 'Ghost in the Shell'
+INSERT INTO WatchlistShow VALUES (5, 11); 
+INSERT INTO WatchlistShow VALUES (5, 20); 
+INSERT INTO WatchlistShow VALUES (5, 21); 
+INSERT INTO WatchlistShow VALUES (5, 25);
+INSERT INTO WatchlistShow VALUES (5, 8);  
