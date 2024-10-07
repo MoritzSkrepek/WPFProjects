@@ -7,20 +7,20 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\example insert statements.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:example insert statements.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addwatchlistdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\example insert statements.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:example insert statements.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addwatchlistdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,7 +50,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "AddWatchlistDialog.xaml.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddWatchlistDialog.xaml.cs",
               "RelativeDocumentMoniker": "AddWatchlistDialog.xaml.cs",
@@ -63,7 +63,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "AddWatchlistDialog.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddWatchlistDialog.xaml",
               "RelativeDocumentMoniker": "AddWatchlistDialog.xaml",
@@ -75,13 +75,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "Example Insert Statements.txt",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Example Insert Statements.txt",
               "RelativeDocumentMoniker": "Example Insert Statements.txt",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Example Insert Statements.txt",
               "RelativeToolTip": "Example Insert Statements.txt",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAAAgAAABcAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
               "WhenOpened": "2024-10-07T18:02:58.757Z",
               "EditorCaption": ""
@@ -96,8 +96,7 @@
               "RelativeToolTip": "Show.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-07T14:04:48.206Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-07T14:04:48.206Z"
             },
             {
               "$type": "Document",
@@ -109,8 +108,7 @@
               "RelativeToolTip": "Watchlist.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-07T11:38:09.164Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-07T11:38:09.164Z"
             },
             {
               "$type": "Document",
@@ -132,7 +130,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAwI0AAAArAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAwDEAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-07T09:36:54.235Z",
               "EditorCaption": ""

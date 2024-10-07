@@ -1,6 +1,7 @@
 ﻿using DataModel;
 using LinqToDB;
 using LinqToDB.Data;
+using LinqToDB.DataProvider.SQLite;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -125,16 +126,39 @@ namespace WatchlistApp
 
         private void DeleteWatchlist(object sender, RoutedEventArgs e)
         {
-            /* TODO: Delete whole watchlist */
+            var button = sender as Button;
+
+            /* Watchlist die geloescht werden soll */
+            var watchlist_to_delete = button?.DataContext as Watchlist;
+
+            /* Alle Eintraege in der Verbindungstabelle */
+            var watchlistshows = connection.GetTable<WatchlistShow>()
+                .Where(ws => ws.WlNr == watchlist_to_delete.WlNr).ToList();
+
+            var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
+                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
+                    .Join(connection.GetTable<Show>(),
+                        ws => ws.ShowNr,
+                        show => show.ShowNr,
+                        (ws, show) => show)
+                    .ToList();
+
+            foreach (WatchlistShow watchlistshow in watchlistshows) {
+                connection.Delete(watchlistshow);
+            }
+            foreach (Show show in shows_for_selected_watchlist)
+            {
+                connection.Delete(show);
+            }
+            connection.Delete(watchlist_to_delete);
+            watchlists.Remove(watchlist_to_delete);
+            shows.Clear();
         }
 
         private void AddShowToWatchlist(object sender, RoutedEventArgs e)
         {
-            /* Button welcher geklickt wurde */ 
             var button = sender as Button;
-
-            /* Watchlist von dem DataContext des Buttons holen */
-            var selectedWatchlist = button?.DataContext as Watchlist;
+            var selected_watchlist = button?.DataContext as Watchlist;
 
             /* TODO: Add show to watchlist dialog and logic */
         }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WatchlistApp"
         mc:Ignorable="d"
+        ResizeMode="CanResize"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -77,7 +78,7 @@
                             </Grid.ColumnDefinitions>
                             <StackPanel Orientation="Horizontal" Grid.Column="0">
                                 <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                <CheckBox>
+                                <CheckBox VerticalAlignment="Center">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Setter Property="IsChecked" Value="False" />
@@ -95,7 +96,7 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Grid.Column="1">
                                 <TextBlock Text="Bereits angeschaut" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                <CheckBox>
+                                <CheckBox VerticalAlignment="Center">
                                     <CheckBox.Style>
                                         <Style TargetType="CheckBox">
                                             <Setter Property="IsChecked" Value="False" />
@@ -111,7 +112,7 @@
                                     </CheckBox.Style>
                                 </CheckBox>
                             </StackPanel>
-                            <Button Content="-" VerticalAlignment="Center" Grid.Column="2" Click="RemoveShowFromWatchlist"/>
+                            <Button Content="-" Grid.Column="2" Click="RemoveShowFromWatchlist"/>
                         </Grid>
                     </Grid>
                 </DataTemplate>

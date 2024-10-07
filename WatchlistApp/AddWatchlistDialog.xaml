@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WatchlistApp"
         mc:Ignorable="d"
-        Title="AddWatchlistDialog" Height="auto" Width="auto">
+        ResizeMode="CanResize"
+        Title="AddWatchlistDialog" Height="50" Width="Auto">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="0.25*"/>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Watchlist Name" Grid.Column="0"/>
+        <Label Content="Watchlist Name" Grid.Column="0" VerticalAlignment="Center"/>
         <TextBox x:Name="new_watchlist_field" Grid.Column="1"/>
         <Button Content="Hinzufügen" Grid.Column="2" Click="AddWatchlistToDatebase" />
     </Grid>
