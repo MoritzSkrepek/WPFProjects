@@ -1,0 +1,6 @@
+Main
+https://linq2db.github.io/index.html
+
+
+Install guide and how to use
+https://linq2db.github.io/articles/CLI.html

@@ -7,8 +7,19 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\morit\\AppData\\Local\\Temp\\.vsdbgsrc\\5808e37dae334fa0216b33ea5f5cb667807e4dd9bd0e0dc899dcd93d8cd22dfe\\ItemCollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\watchlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:watchlist.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +29,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,6 +41,57 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Show.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
+              "RelativeDocumentMoniker": "Show.cs",
+              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
+              "RelativeToolTip": "Show.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAqwCMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T14:04:48.206Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ItemCollection.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\AppData\\Local\\Temp\\.vsdbgsrc\\5808e37dae334fa0216b33ea5f5cb667807e4dd9bd0e0dc899dcd93d8cd22dfe\\ItemCollection.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5808e37dae334fa0216b33ea5f5cb667807e4dd9bd0e0dc899dcd93d8cd22dfe\\ItemCollection.cs",
+              "ToolTip": "C:\\Users\\morit\\AppData\\Local\\Temp\\.vsdbgsrc\\5808e37dae334fa0216b33ea5f5cb667807e4dd9bd0e0dc899dcd93d8cd22dfe\\ItemCollection.cs [Schreibgesch\u00FCtzt]",
+              "RelativeToolTip": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5808e37dae334fa0216b33ea5f5cb667807e4dd9bd0e0dc899dcd93d8cd22dfe\\ItemCollection.cs [Schreibgesch\u00FCtzt]",
+              "ViewState": "AgIAAKQGAAAAAAAAAAAYwLYGAAADAAAAAQAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T12:15:46.22Z",
+              "EditorCaption": " [Schreibgesch\u00FCtzt]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Watchlist.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Watchlist.cs",
+              "RelativeDocumentMoniker": "Watchlist.cs",
+              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Watchlist.cs",
+              "RelativeToolTip": "Watchlist.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T11:38:09.164Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAwwD4AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-07T09:36:54.235Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml",
@@ -38,19 +100,6 @@
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2024-10-07T09:36:56.348Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
-              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
-              "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-07T09:36:54.235Z",
               "EditorCaption": ""
             }
           ]
