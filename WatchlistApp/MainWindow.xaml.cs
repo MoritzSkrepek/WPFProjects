@@ -152,7 +152,7 @@ namespace WatchlistApp
             }
             connection.Delete(watchlist_to_delete);
             watchlists.Remove(watchlist_to_delete);
-            shows.Clear();
+            shows?.Clear();
         }
 
         private void AddShowToWatchlist(object sender, RoutedEventArgs e)
@@ -165,19 +165,68 @@ namespace WatchlistApp
 
         private void RemoveShowFromWatchlist(object sender, RoutedEventArgs e)
         {
-            /* Button welcher geklickt wurde */
             var button = sender as Button;
-
-            /* Show von dem DataContext des Buttons holen */
             var show_to_delete = button?.DataContext as Show;
 
             /* Watchlist, die die zu entfernende Show enthaelt */
             var watchlist_with_show_to_delete = connection.GetTable<WatchlistShow>()
                 .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
 
-            connection.Delete(watchlist_with_show_to_delete);
-            connection.Delete(show_to_delete);
-            shows.Remove(show_to_delete);     
+            if (show_to_delete != null && watchlist_with_show_to_delete != null)
+            {
+                connection.Delete(watchlist_with_show_to_delete);
+                connection.Delete(show_to_delete);
+                shows.Remove(show_to_delete);
+            }
+            return;
+        }
+
+        private void IsReleasingChecked(object sender, RoutedEventArgs e)
+        {
+            var check_box = sender as CheckBox;
+            var show_to_update = check_box?.DataContext as Show;
+            if (show_to_update != null)
+            {
+                show_to_update.IsReleasing = 1;
+                connection.Update(show_to_update);
+            }
+            return;
+        }
+
+        private void IsReleasingUnchecked(object sender, RoutedEventArgs e)
+        {
+            var check_box = sender as CheckBox;
+            var show_to_update = check_box?.DataContext as Show;
+            if (show_to_update != null)
+            {
+                show_to_update.IsReleasing = 0;
+                connection.Update(show_to_update);
+            }
+            return;
+        }
+
+        private void AlreadyWatchedChecked(object sender, RoutedEventArgs e)
+        {
+            var checl_box = sender as CheckBox;
+            var show_to_update = checl_box?.DataContext as Show;
+            if (show_to_update != null)
+            {
+                show_to_update.AlreadyWatched = 1;
+                connection.Update(show_to_update);
+            }
+            return;
+        }
+
+        private void AlreadyWatchedUnchecked(object sender, RoutedEventArgs e)
+        {
+            var checl_box = sender as CheckBox;
+            var show_to_update = checl_box?.DataContext as Show;
+            if (show_to_update != null)
+            {
+                show_to_update.AlreadyWatched = 0;
+                connection.Update(show_to_update);
+            }
+            return;
         }
     }
 }
