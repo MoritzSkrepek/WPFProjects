@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\App.xaml
-2-235670957
+3-172585550
 
-9-1936102290
+10901315839
 2031486461369
-AddWatchlistDialog.xaml;MainWindow.xaml;
+AddShowDialog.xaml;AddWatchlistDialog.xaml;MainWindow.xaml;
 
 False
 

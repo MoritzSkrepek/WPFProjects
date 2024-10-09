@@ -124,6 +124,17 @@ namespace WatchlistApp
             }
         }
 
+        private void AddShowToWatchlist(object sender, RoutedEventArgs e)
+        {
+            var button = sender as Button;
+            var selected_watchlist = button?.DataContext as Watchlist;
+            if (selected_watchlist != null)
+            {
+                AddShowDialog dialog = new AddShowDialog(connection, selected_watchlist, this);
+                dialog.ShowDialog();
+            }
+        }
+
         private void DeleteWatchlist(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
@@ -131,54 +142,60 @@ namespace WatchlistApp
             /* Watchlist die geloescht werden soll */
             var watchlist_to_delete = button?.DataContext as Watchlist;
 
-            /* Alle Eintraege in der Verbindungstabelle */
-            var watchlistshows = connection.GetTable<WatchlistShow>()
-                .Where(ws => ws.WlNr == watchlist_to_delete.WlNr).ToList();
-
-            var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
-                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
-                    .Join(connection.GetTable<Show>(),
-                        ws => ws.ShowNr,
-                        show => show.ShowNr,
-                        (ws, show) => show)
-                    .ToList();
-
-            foreach (WatchlistShow watchlistshow in watchlistshows) {
-                connection.Delete(watchlistshow);
-            }
-            foreach (Show show in shows_for_selected_watchlist)
+            if (watchlist_to_delete != null)
             {
-                connection.Delete(show);
+                /* Alle Eintraege in der Verbindungstabelle */
+                var watchlistshows = connection.GetTable<WatchlistShow>()
+                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr).ToList();
+
+                var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
+                        .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
+                        .Join(connection.GetTable<Show>(),
+                            ws => ws.ShowNr,
+                            show => show.ShowNr,
+                            (ws, show) => show)
+                        .ToList();
+
+                foreach (WatchlistShow watchlistshow in watchlistshows)
+                {
+                    connection.Delete(watchlistshow);
+                }
+                foreach (Show show in shows_for_selected_watchlist)
+                {
+                    connection.Delete(show);
+                }
+                connection.Delete(watchlist_to_delete);
+                watchlists.Remove(watchlist_to_delete);
+                shows?.Clear();
             }
-            connection.Delete(watchlist_to_delete);
-            watchlists.Remove(watchlist_to_delete);
-            shows?.Clear();
-        }
-
-        private void AddShowToWatchlist(object sender, RoutedEventArgs e)
-        {
-            var button = sender as Button;
-            var selected_watchlist = button?.DataContext as Watchlist;
-
-            /* TODO: Add show to watchlist dialog and logic */
+            else
+            {
+                MessageBox.Show("[ERROR]: Fehler beim löschen der Watchlist!");
+            }
         }
 
         private void RemoveShowFromWatchlist(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
             var show_to_delete = button?.DataContext as Show;
-
-            /* Watchlist, die die zu entfernende Show enthaelt */
-            var watchlist_with_show_to_delete = connection.GetTable<WatchlistShow>()
-                .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
-
-            if (show_to_delete != null && watchlist_with_show_to_delete != null)
+            if (show_to_delete != null) 
             {
-                connection.Delete(watchlist_with_show_to_delete);
-                connection.Delete(show_to_delete);
-                shows.Remove(show_to_delete);
+                /* Watchlist, die die zu entfernende Show enthaelt */
+                var watchlist_with_show_to_delete = connection.GetTable<WatchlistShow>()
+                    .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
+
+                if (show_to_delete != null && watchlist_with_show_to_delete != null)
+                {
+                    connection.Delete(watchlist_with_show_to_delete);
+                    connection.Delete(show_to_delete);
+                    shows.Remove(show_to_delete);
+                }
+                return;
             }
-            return;
+            else
+            {
+                MessageBox.Show("[ERROR]: Fehler beim löschen der Show!");
+            }
         }
 
         private void IsReleasingChecked(object sender, RoutedEventArgs e)
