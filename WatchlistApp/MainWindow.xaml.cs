@@ -54,9 +54,9 @@ namespace WatchlistApp
             }
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged(string property_name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property_name));
         }
 
         public MainWindow()
@@ -117,11 +117,8 @@ namespace WatchlistApp
 
         private void AddWatchlist(object sender, RoutedEventArgs e)
         {
-            AddWatchlistDialog dialog = new AddWatchlistDialog(connection);
-            if(dialog.ShowDialog() == true)
-            {
-                watchlists.Add(dialog.new_watch_list);
-            }
+            AddWatchlistDialog dialog = new AddWatchlistDialog(connection, this);
+            dialog.ShowDialog();
         }
 
         private void AddShowToWatchlist(object sender, RoutedEventArgs e)
@@ -138,8 +135,6 @@ namespace WatchlistApp
         private void DeleteWatchlist(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-
-            /* Watchlist die geloescht werden soll */
             var watchlist_to_delete = button?.DataContext as Watchlist;
 
             if (watchlist_to_delete != null)

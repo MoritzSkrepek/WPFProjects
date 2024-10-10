@@ -57,6 +57,7 @@ namespace WatchlistApp
             connection = c;
             selected_watchlist = wl;
             main_window = mw;
+            Debug.WriteLine("WlNr von Watchlistshow: " + selected_watchlist.WlNr);
             InitializeComponent();
             DataContext = this;
         }
@@ -112,6 +113,8 @@ namespace WatchlistApp
                         WlNr = selected_watchlist.WlNr,
                         ShowNr = insertedShow.ShowNr
                     };
+                    Debug.WriteLine(watchlistShow.WlNr);
+                    Debug.WriteLine(insertedShow.ShowNr);
                     connection.Insert(watchlistShow);
 
                     // Shows aus mainwindow fuer die UI updaten

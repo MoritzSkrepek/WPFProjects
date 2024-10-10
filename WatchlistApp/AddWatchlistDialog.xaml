@@ -15,6 +15,6 @@
         </Grid.ColumnDefinitions>
         <Label Content="Watchlist Name" Grid.Column="0" VerticalAlignment="Center"/>
         <TextBox x:Name="new_watchlist_field" Grid.Column="1"/>
-        <Button Content="Hinzufügen" Grid.Column="2" Click="AddWatchlistToDatebase" />
+        <Button Content="Hinzufügen" Grid.Column="2" Click="AddWatchlistToDatabase" />
     </Grid>
 </Window>
