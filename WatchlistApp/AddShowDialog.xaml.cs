@@ -99,8 +99,7 @@ namespace WatchlistApp
                     ReleaseDate = releasedate,
                     IsReleasing = stillreleasing,
                     AlreadyWatched = alreadywatched,
-                    //Image = image_bytes // Muss noch ersetzt werden
-                    Image = "Test"
+                    Image = image_bytes // Muss noch ersetzt werden
                 };
                 connection.Insert(show);
                 var insertedShow = connection.GetTable<Show>()

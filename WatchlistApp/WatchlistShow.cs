@@ -22,14 +22,14 @@ namespace DataModel
 		/// <summary>
 		/// FK_WatchlistShow_0_0
 		/// </summary>
-		[Association(CanBeNull = false, ThisKey = nameof(ShowNr), OtherKey = nameof(Show.ShowNr))]
-		public Show FkWatchlistShow00 { get; set; } = null!;
+		[Association(CanBeNull = false, ThisKey = nameof(WlNr), OtherKey = nameof(Watchlist.WlNr))]
+		public Watchlist FkWatchlistShow00 { get; set; } = null!;
 
 		/// <summary>
 		/// FK_WatchlistShow_1_0
 		/// </summary>
-		[Association(CanBeNull = false, ThisKey = nameof(WlNr), OtherKey = nameof(Watchlist.WlNr))]
-		public Watchlist FkWatchlistShow10 { get; set; } = null!;
+		[Association(CanBeNull = false, ThisKey = nameof(ShowNr), OtherKey = nameof(Show.ShowNr))]
+		public Show FkWatchlistShow10 { get; set; } = null!;
 		#endregion
 	}
 }

@@ -21,7 +21,7 @@ namespace DataModel
 
 		#region Associations
 		/// <summary>
-		/// FK_WatchlistShow_1_0 backreference
+		/// FK_WatchlistShow_0_0 backreference
 		/// </summary>
 		[Association(ThisKey = nameof(WlNr), OtherKey = nameof(WatchlistShow.WlNr))]
 		public IEnumerable<WatchlistShow> WatchlistShows { get; set; } = null!;

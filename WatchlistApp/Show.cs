@@ -21,12 +21,12 @@ namespace DataModel
 		[Column("Description"   , CanBeNull    = false                                                             )] public string Description    { get; set; } = null!; // text(max)
 		[Column("ReleaseDate"   , CanBeNull    = false                                                             )] public string ReleaseDate    { get; set; } = null!; // text(max)
 		[Column("IsReleasing"                                                                                      )] public long   IsReleasing    { get; set; } // integer
-		[Column("Image"         , CanBeNull    = false                                                             )] public string Image          { get; set; } = null!; // text(max)
+		[Column("Image"         , CanBeNull    = false                                                             )] public byte[] Image          { get; set; } = null!; // blob
 		[Column("AlreadyWatched"                                                                                   )] public long   AlreadyWatched { get; set; } // integer
 
 		#region Associations
 		/// <summary>
-		/// FK_WatchlistShow_0_0 backreference
+		/// FK_WatchlistShow_1_0 backreference
 		/// </summary>
 		[Association(ThisKey = nameof(ShowNr), OtherKey = nameof(WatchlistShow.ShowNr))]
 		public IEnumerable<WatchlistShow> WatchlistShows { get; set; } = null!;
