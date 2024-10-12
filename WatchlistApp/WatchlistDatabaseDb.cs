@@ -38,6 +38,8 @@ namespace DataModel
 		partial void InitDataContext();
 
 		public ITable<Show>          Shows          => this.GetTable<Show>();
+		public ITable<ShowTag>       ShowTags       => this.GetTable<ShowTag>();
+		public ITable<Tag>           Tags           => this.GetTable<Tag>();
 		public ITable<Watchlist>     Watchlists     => this.GetTable<Watchlist>();
 		public ITable<WatchlistShow> WatchlistShows => this.GetTable<WatchlistShow>();
 	}
@@ -53,6 +55,26 @@ namespace DataModel
 		public static Task<Show?> FindAsync(this ITable<Show> table, long showNr, CancellationToken cancellationToken = default)
 		{
 			return table.FirstOrDefaultAsync(e => e.ShowNr == showNr, cancellationToken);
+		}
+
+		public static ShowTag? Find(this ITable<ShowTag> table, long showTagNr)
+		{
+			return table.FirstOrDefault(e => e.ShowTagNr == showTagNr);
+		}
+
+		public static Task<ShowTag?> FindAsync(this ITable<ShowTag> table, long showTagNr, CancellationToken cancellationToken = default)
+		{
+			return table.FirstOrDefaultAsync(e => e.ShowTagNr == showTagNr, cancellationToken);
+		}
+
+		public static Tag? Find(this ITable<Tag> table, long tagNr)
+		{
+			return table.FirstOrDefault(e => e.TagNr == tagNr);
+		}
+
+		public static Task<Tag?> FindAsync(this ITable<Tag> table, long tagNr, CancellationToken cancellationToken = default)
+		{
+			return table.FirstOrDefaultAsync(e => e.TagNr == tagNr, cancellationToken);
 		}
 
 		public static Watchlist? Find(this ITable<Watchlist> table, long wlNr)

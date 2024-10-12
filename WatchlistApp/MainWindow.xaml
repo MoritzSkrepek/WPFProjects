@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WatchlistApp"
         mc:Ignorable="d"
-        ResizeMode="CanResize"
-        Title="MainWindow" Height="450" Width="800">
+        ResizeMode="CanResizeWithGrip"
+        MinHeight="400"
+        MinWidth="650"
+        Title="MainWindow">
     <Window.Resources>
         <Style x:Key="ImageButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="Transparent"/>
@@ -23,25 +25,40 @@
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto" MinWidth="150"/>
+            <ColumnDefinition Width="*" MinWidth="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"></RowDefinition>
-            <RowDefinition Height="9*"></RowDefinition>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Button Content="Neue Watchlist" Grid.Row="0" Grid.Column="0" Click="AddWatchlist"/>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="1">
-            <Label Content="Filter"></Label>
-            <Label Content="Releasing"></Label>
-            <ComboBox>
-                <ComboBoxItem Content="Ja"></ComboBoxItem>
-                <ComboBoxItem Content="Nein"></ComboBoxItem>
-            </ComboBox>
-            <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow"/>
-        </StackPanel>
+        <Grid Grid.Column="1" HorizontalAlignment="Right">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <Expander Header="Filter" Margin="5">
+                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged" >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}" Margin="5" VerticalAlignment="Center"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Expander>
+                <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow" />
+            </StackPanel>
+        </Grid>
 
         <ListBox x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" SelectionChanged="WatchlistSelectionChanged">
             <ListBox.ItemTemplate>
@@ -67,7 +84,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Width="410" Height="250">
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Width="460" Height="250">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />

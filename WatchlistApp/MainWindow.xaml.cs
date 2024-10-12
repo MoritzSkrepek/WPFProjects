@@ -30,7 +30,10 @@ namespace WatchlistApp
         );
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public List<Tag> filters = new List<Tag>(); // Tags welche gefiltert werden sollen
         public ObservableCollection<WatchlistShow> watchlist_shows { get; set; }
+        public ObservableCollection<Tag> tags { get; set; } // Liste an Tags fuer das anzeigen in der UI
 
         public ObservableCollection<Watchlist> _watchlists;
         public ObservableCollection<Watchlist> watchlists 
@@ -68,9 +71,11 @@ namespace WatchlistApp
 
         private void GetLists()
         {
-            var watchlists_ = connection.GetTable<Watchlist>()
-                .ToList();
-            watchlists = new ObservableCollection<Watchlist>(watchlists_); 
+            var _watchlists = connection.GetTable<Watchlist>().ToList();
+            watchlists = new ObservableCollection<Watchlist>(_watchlists); 
+            var _tags = connection.GetTable<Tag>().ToList();
+            tags = new ObservableCollection<Tag>(_tags);
+
         }
 
         private void WatchlistSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -127,7 +132,7 @@ namespace WatchlistApp
             var selected_watchlist = button?.DataContext as Watchlist;
             if (selected_watchlist != null)
             {
-                AddShowDialog dialog = new AddShowDialog(connection, selected_watchlist, this);
+                AddShowDialog dialog = new AddShowDialog(connection, selected_watchlist, tags, this);
                 dialog.ShowDialog();
             }
         }
@@ -141,7 +146,8 @@ namespace WatchlistApp
             {
                 /* Alle Eintraege in der Verbindungstabelle */
                 var watchlistshows = connection.GetTable<WatchlistShow>()
-                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr).ToList();
+                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
+                    .ToList();
 
                 var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
                         .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
@@ -179,9 +185,17 @@ namespace WatchlistApp
                 var watchlist_with_show_to_delete = connection.GetTable<WatchlistShow>()
                     .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
 
-                if (show_to_delete != null && watchlist_with_show_to_delete != null)
+                var tag_show_to_delete = connection.GetTable<ShowTag>()
+                    .Where(ts => ts.ShowNr == show_to_delete.ShowNr)
+                    .ToList();
+
+                if (show_to_delete != null && watchlist_with_show_to_delete != null && tag_show_to_delete != null)
                 {
                     connection.Delete(watchlist_with_show_to_delete);
+                    foreach (var tag_show in tag_show_to_delete)
+                    {
+                        connection.Delete(tag_show);
+                    }
                     connection.Delete(show_to_delete);
                     shows.Remove(show_to_delete);
                 }
@@ -219,8 +233,8 @@ namespace WatchlistApp
 
         private void AlreadyWatchedChecked(object sender, RoutedEventArgs e)
         {
-            var checl_box = sender as CheckBox;
-            var show_to_update = checl_box?.DataContext as Show;
+            var check_box = sender as CheckBox;
+            var show_to_update = check_box?.DataContext as Show;
             if (show_to_update != null)
             {
                 show_to_update.AlreadyWatched = 1;
@@ -231,14 +245,36 @@ namespace WatchlistApp
 
         private void AlreadyWatchedUnchecked(object sender, RoutedEventArgs e)
         {
-            var checl_box = sender as CheckBox;
-            var show_to_update = checl_box?.DataContext as Show;
+            var check_box = sender as CheckBox;
+            var show_to_update = check_box?.DataContext as Show;
             if (show_to_update != null)
             {
                 show_to_update.AlreadyWatched = 0;
                 connection.Update(show_to_update);
             }
             return;
+        }
+
+        private void SelectedFilterChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filters.Clear();
+            foreach (var item in filter_listbox.SelectedItems)
+            {
+                if (item is Tag tag) 
+                {
+                    filters.Add(tag);
+                }
+                else
+                {
+                    return;
+                }
+            }
+            FilterShows();
+        }
+
+        private void FilterShows()
+        {
+            
         }
     }
 }

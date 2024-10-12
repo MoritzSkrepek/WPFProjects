@@ -28,12 +28,13 @@ namespace WatchlistApp
     /// </summary>
     public partial class AddShowDialog : Window, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public ObservableCollection<Tag> tags { get; set; }
+
+        private List<Tag> selected_tags = new List<Tag>();
         private readonly WatchlistDatabaseDb connection;
         private Watchlist selected_watchlist;
         private MainWindow main_window;
-
-        public event PropertyChangedEventHandler? PropertyChanged;
-
         private string title;
         private string description;
         private string releasedate;
@@ -52,12 +53,12 @@ namespace WatchlistApp
             }
         }
 
-        public AddShowDialog(WatchlistDatabaseDb c, Watchlist wl, MainWindow mw)
+        public AddShowDialog(WatchlistDatabaseDb c, Watchlist wl, ObservableCollection<Tag> t, MainWindow mw)
         {
             connection = c;
             selected_watchlist = wl;
             main_window = mw;
-            Debug.WriteLine("WlNr von Watchlistshow: " + selected_watchlist.WlNr);
+            tags = t;
             InitializeComponent();
             DataContext = this;
         }
@@ -81,63 +82,100 @@ namespace WatchlistApp
 
         private void AddShowToWatchlist(object sender, RoutedEventArgs e)
         {
-            title = show_titel_textblock.Text;
-            description = show_name_description_textblock.Text;
-            releasedate = show_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
-            stillreleasing = show_still_releasing_checkbox.IsChecked == true ? 1 : 0;
-            alreadywatched = show_already_watched_checkbox.IsChecked == true ? 1 : 0;
-
-            if (!string.IsNullOrEmpty(title) &&
-                !string.IsNullOrEmpty(description) &&
-                !string.IsNullOrEmpty(releasedate) &&
-                image_bytes != null)
+            SetVariables();
+            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(description) && !string.IsNullOrEmpty(releasedate) && image_bytes != null)
             {
-                Show show = new Show()
-                {
-                    Name = title,
-                    Description = description,
-                    ReleaseDate = releasedate,
-                    IsReleasing = stillreleasing,
-                    AlreadyWatched = alreadywatched,
-                    Image = image_bytes // Muss noch ersetzt werden
-                };
-                connection.Insert(show);
-                var insertedShow = connection.GetTable<Show>()
+                InsertShow();
+                var inserted_show = connection.GetTable<Show>()
                     .OrderByDescending(s => s.ShowNr)
                     .FirstOrDefault();
-                if (insertedShow != null)
+                if (inserted_show != null)
                 {
-                    WatchlistShow watchlistShow = new WatchlistShow()
-                    {
-                        WlNr = selected_watchlist.WlNr,
-                        ShowNr = insertedShow.ShowNr
-                    };
-                    Debug.WriteLine(watchlistShow.WlNr);
-                    Debug.WriteLine(insertedShow.ShowNr);
-                    connection.Insert(watchlistShow);
-
-                    // Shows aus mainwindow fuer die UI updaten
-                    var currentShows = connection.GetTable<WatchlistShow>()
-                        .Where(ws => ws.WlNr == selected_watchlist.WlNr)
-                        .Join(connection.GetTable<Show>(),
-                            ws => ws.ShowNr,
-                            show => show.ShowNr,
-                            (ws, show) => show)
-                        .ToList();
-
-                    main_window.shows = new ObservableCollection<Show>(currentShows);
-                }
-                else
-                {
-                    MessageBox.Show("Fehler beim Abrufen der Show-ID nach dem Einfügen.");
+                    InsertWatchlistShow(inserted_show);
+                    UpdateMainWindowUI();
+                    InsertShowTags(inserted_show);
                 }
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus.");
+                MessageBox.Show("[ERROR]: Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus!");
             }
         }
 
+        private void InsertShowTags(Show inserted_show)
+        {
+            foreach (Tag tag in selected_tags)
+            {
+                ShowTag show_tag = new ShowTag()
+                {
+                    ShowNr = inserted_show.ShowNr,
+                    TagNr = tag.TagNr,
+                };
+                connection.Insert(show_tag);
+            }
+        }
+
+        private void SetVariables()
+        {
+            title = show_titel_textblock.Text;
+            description = show_name_description_textblock.Text;
+            releasedate = show_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+            stillreleasing = show_still_releasing_checkbox.IsChecked == true ? 1 : 0;
+            alreadywatched = show_already_watched_checkbox.IsChecked == true ? 1 : 0;
+        }
+
+        private void UpdateMainWindowUI()
+        {
+            var currentShows = connection.GetTable<WatchlistShow>()
+                .Where(ws => ws.WlNr == selected_watchlist.WlNr)
+                .Join(connection.GetTable<Show>(),
+                    ws => ws.ShowNr,
+                    show => show.ShowNr,
+                    (ws, show) => show)
+                .ToList();
+            main_window.shows = new ObservableCollection<Show>(currentShows);
+        }
+
+        private void InsertWatchlistShow(Show insertedShow)
+        {
+            WatchlistShow watchlistShow = new WatchlistShow()
+            {
+                WlNr = selected_watchlist.WlNr,
+                ShowNr = insertedShow.ShowNr
+            };
+
+            connection.Insert(watchlistShow);
+        }
+
+        private void InsertShow()
+        {
+            Show show = new Show()
+            {
+                Name = title,
+                Description = description,
+                ReleaseDate = releasedate,
+                IsReleasing = stillreleasing,
+                AlreadyWatched = alreadywatched,
+                Image = image_bytes
+            };
+            connection.Insert(show);
+        }
+
+        private void TagsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            selected_tags.Clear();
+            foreach (var item in tags_listbox.SelectedItems)
+            {
+                if (item is Tag tag)
+                {
+                    selected_tags.Add(tag);
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
     }
 }

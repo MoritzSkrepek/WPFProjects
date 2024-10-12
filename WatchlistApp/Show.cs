@@ -26,6 +26,12 @@ namespace DataModel
 
 		#region Associations
 		/// <summary>
+		/// FK_ShowTag_1_0 backreference
+		/// </summary>
+		[Association(ThisKey = nameof(ShowNr), OtherKey = nameof(ShowTag.ShowNr))]
+		public IEnumerable<ShowTag> ShowTags { get; set; } = null!;
+
+		/// <summary>
 		/// FK_WatchlistShow_1_0 backreference
 		/// </summary>
 		[Association(ThisKey = nameof(ShowNr), OtherKey = nameof(WatchlistShow.ShowNr))]
