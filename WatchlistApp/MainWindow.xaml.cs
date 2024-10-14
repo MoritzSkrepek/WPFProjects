@@ -33,6 +33,7 @@ namespace WatchlistApp
 
         public List<Tag> filters = new List<Tag>(); // Tags welche gefiltert werden sollen
         public ObservableCollection<WatchlistShow> watchlist_shows { get; set; }
+        public ObservableCollection<Tag> current_show_tags { get; set; } = new ObservableCollection<Tag>();
         public ObservableCollection<Tag> tags { get; set; } // Liste an Tags fuer das anzeigen in der UI
 
         public ObservableCollection<Watchlist> _watchlists;
@@ -82,8 +83,7 @@ namespace WatchlistApp
         {
             if (watchlist_listbox.SelectedItem is Watchlist selectedWatchlist)
             {
-                /* Alle Shows die in der aktuell ausgewaehlten Watchlist enthalten
-                 * sind abfragen und anzeigen */
+                // Alle Shows, die in der aktuell ausgewählten Watchlist enthalten sind, abfragen und anzeigen.
                 var showsForSelectedWatchlist = connection.GetTable<WatchlistShow>()
                     .Where(ws => ws.WlNr == selectedWatchlist.WlNr)
                     .Join(connection.GetTable<Show>(),
@@ -91,9 +91,40 @@ namespace WatchlistApp
                         show => show.ShowNr,
                         (ws, show) => show)
                     .ToList();
+
                 shows = new ObservableCollection<Show>(showsForSelectedWatchlist);
+
+                // Leere die aktuelle Tag-Liste
+                current_show_tags.Clear();
+
+                foreach (var show in shows)
+                {
+                    var tagsForShow = connection.GetTable<ShowTag>()
+                        .Where(st => st.ShowNr == show.ShowNr)
+                        .Join(connection.GetTable<Tag>(),
+                            st => st.TagNr,
+                            tag => tag.TagNr,
+                            (st, tag) => tag)
+                        .ToList();
+
+                    // Füge die Tags zur aktuellen Tag-Liste hinzu
+                    foreach (var tag in tagsForShow)
+                    {
+                        current_show_tags.Add(tag);
+                    }
+
+                    // Ausgabe der Show-Informationen und der zugehörigen Tags in der Debug-Konsole.
+                    Debug.WriteLine($"Show: {show.Name} (ID: {show.ShowNr})");
+                    Debug.WriteLine("Tags:");
+
+                    foreach (var tag in tagsForShow)
+                    {
+                        Debug.WriteLine($" - {tag.Name} (ID: {tag.TagNr})");
+                    }
+                }
             }
         }
+
 
         private void SearchShow(object sender, RoutedEventArgs e)
         {
@@ -144,36 +175,52 @@ namespace WatchlistApp
 
             if (watchlist_to_delete != null)
             {
-                /* Alle Eintraege in der Verbindungstabelle */
+                // Alle Shows in der zu löschenden Watchlist 
+                var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
+                    .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
+                    .Join(connection.GetTable<Show>(),
+                        ws => ws.ShowNr,
+                        show => show.ShowNr,
+                        (ws, show) => show)
+                    .ToList();
+
+                // Alle Einträge in der Verbindungstabelle 
                 var watchlistshows = connection.GetTable<WatchlistShow>()
                     .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
                     .ToList();
 
-                var shows_for_selected_watchlist = connection.GetTable<WatchlistShow>()
-                        .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
-                        .Join(connection.GetTable<Show>(),
-                            ws => ws.ShowNr,
-                            show => show.ShowNr,
-                            (ws, show) => show)
-                        .ToList();
-
+                // Jeden Watchlist Show Eintrag loeschen
                 foreach (WatchlistShow watchlistshow in watchlistshows)
                 {
                     connection.Delete(watchlistshow);
                 }
+
+                // Jede Show in der Watchlist loeschen
                 foreach (Show show in shows_for_selected_watchlist)
                 {
+                    var show_tags_to_delete = connection.GetTable<ShowTag>()
+                        .Where(st => st.ShowNr == show.ShowNr)
+                        .ToList();
+
+                    // Jeden ShowTag eintrag der Show loeschen
+                    foreach (ShowTag show_tag in show_tags_to_delete)
+                    {
+                        connection.Delete(show_tag);
+                    }
                     connection.Delete(show);
                 }
+
+                // Watchlist selbst loeschen
                 connection.Delete(watchlist_to_delete);
                 watchlists.Remove(watchlist_to_delete);
                 shows?.Clear();
             }
             else
             {
-                MessageBox.Show("[ERROR]: Fehler beim löschen der Watchlist!");
+                MessageBox.Show("[ERROR]: Fehler beim Löschen der Watchlist!");
             }
         }
+
 
         private void RemoveShowFromWatchlist(object sender, RoutedEventArgs e)
         {
@@ -181,21 +228,27 @@ namespace WatchlistApp
             var show_to_delete = button?.DataContext as Show;
             if (show_to_delete != null) 
             {
-                /* Watchlist, die die zu entfernende Show enthaelt */
-                var watchlist_with_show_to_delete = connection.GetTable<WatchlistShow>()
+                // WatchlistShow, die die zu entfernende Show enthaelt 
+                var watchlistshow_with_show_to_delete = connection.GetTable<WatchlistShow>()
                     .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
 
+                // Tags der zu loeschenden Show
                 var tag_show_to_delete = connection.GetTable<ShowTag>()
                     .Where(ts => ts.ShowNr == show_to_delete.ShowNr)
                     .ToList();
 
-                if (show_to_delete != null && watchlist_with_show_to_delete != null && tag_show_to_delete != null)
+                if (show_to_delete != null && watchlistshow_with_show_to_delete != null && tag_show_to_delete != null)
                 {
-                    connection.Delete(watchlist_with_show_to_delete);
+                    // Watchlistshow Eintrag loeschen
+                    connection.Delete(watchlistshow_with_show_to_delete);
+
+                    // Jeden ShowTag Eintrag loeschen
                     foreach (var tag_show in tag_show_to_delete)
                     {
                         connection.Delete(tag_show);
                     }
+
+                    // Show generell loeschen
                     connection.Delete(show_to_delete);
                     shows.Remove(show_to_delete);
                 }

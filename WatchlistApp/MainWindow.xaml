@@ -91,6 +91,7 @@
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -106,7 +107,22 @@
 
                             <TextBlock Text="{Binding ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,0"/>
 
-                            <Grid Grid.Row="3" Grid.Column="1" Margin="5,0,5,5" >
+                            <ListBox x:Name="show_tags_listbox" ItemsSource="{Binding current_show_tags}" Grid.Column="1" Grid.Row="3" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
+                                            <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+
+                            <Grid Grid.Row="4" Grid.Column="1" Margin="5,0,5,5" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
