@@ -91,9 +91,9 @@ namespace WatchlistApp
                     .FirstOrDefault();
                 if (inserted_show != null)
                 {
+                    InsertShowTags(inserted_show);  // Tags hinzufügen bevor die UI aktualisiert wird
                     InsertWatchlistShow(inserted_show);
                     UpdateMainWindowUI();
-                    InsertShowTags(inserted_show);
                 }
                 this.Close();
             }
@@ -102,6 +102,7 @@ namespace WatchlistApp
                 MessageBox.Show("[ERROR]: Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus!");
             }
         }
+
 
         private void InsertShowTags(Show inserted_show)
         {
@@ -127,6 +128,7 @@ namespace WatchlistApp
 
         private void UpdateMainWindowUI()
         {
+            main_window.show_view_model.Clear();
             var currentShows = connection.GetTable<WatchlistShow>()
                 .Where(ws => ws.WlNr == selected_watchlist.WlNr)
                 .Join(connection.GetTable<Show>(),
@@ -134,7 +136,31 @@ namespace WatchlistApp
                     show => show.ShowNr,
                     (ws, show) => show)
                 .ToList();
-            main_window.shows = new ObservableCollection<Show>(currentShows);
+
+            foreach (var show in currentShows)
+            {
+                var tagsForShow = connection.GetTable<ShowTag>()
+                        .Where(st => st.ShowNr == show.ShowNr)
+                        .Join(connection.GetTable<Tag>(),
+                            st => st.TagNr,
+                            tag => tag.TagNr,
+                            (st, tag) => tag)
+                        .ToList();
+                main_window.show_view_model.Add(new ShowViewModel
+                {
+                    show = new Show()
+                    {
+                        ShowNr = show.ShowNr,
+                        Name = show.Name,
+                        Description = show.Description,
+                        ReleaseDate = show.ReleaseDate,
+                        IsReleasing = show.IsReleasing,
+                        AlreadyWatched = show.AlreadyWatched,
+                        Image = show.Image
+                    },
+                    tags = new ObservableCollection<Tag>(tagsForShow)
+                });
+            }
         }
 
         private void InsertWatchlistShow(Show insertedShow)

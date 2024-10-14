@@ -43,7 +43,7 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Expander Header="Filter" Margin="5">
-                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged" >
+                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" />
@@ -76,7 +76,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox x:Name="shows_listbox" ItemsSource="{Binding shows}" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox x:Name="shows_listbox" ItemsSource="{Binding show_view_model}" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -98,16 +98,16 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding Image}" Stretch="UniformToFill" Height="200" Width="150" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Margin="5"/>
-                            <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,5,5,5"/>
+                            <Image Source="{Binding show.Image}" Stretch="UniformToFill" Height="200" Width="150" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Margin="5"/>
+                            <TextBlock Text="{Binding show.Name}" FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,5,5,5"/>
 
                             <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" Height="auto" Margin="5,0">
-                                <TextBlock Text="{Binding Description}" FontSize="14" TextWrapping="Wrap"/>
+                                <TextBlock Text="{Binding show.Description}" FontSize="14" TextWrapping="Wrap"/>
                             </ScrollViewer>
 
-                            <TextBlock Text="{Binding ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,0"/>
+                            <TextBlock Text="{Binding show.ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,0"/>
 
-                            <ListBox x:Name="show_tags_listbox" ItemsSource="{Binding current_show_tags}" Grid.Column="1" Grid.Row="3" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
+                            <ListBox x:Name="show_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="3" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Horizontal"/>
@@ -135,10 +135,10 @@
                                             <Style TargetType="CheckBox">
                                                 <Setter Property="IsChecked" Value="False" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsReleasing}" Value="1">
+                                                    <DataTrigger Binding="{Binding show.IsReleasing}" Value="1">
                                                         <Setter Property="IsChecked" Value="True" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding IsReleasing}" Value="0">
+                                                    <DataTrigger Binding="{Binding show.IsReleasing}" Value="0">
                                                         <Setter Property="IsChecked" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
@@ -153,10 +153,10 @@
                                             <Style TargetType="CheckBox">
                                                 <Setter Property="IsChecked" Value="False" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding AlreadyWatched}" Value="1">
+                                                    <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="1">
                                                         <Setter Property="IsChecked" Value="True" />
                                                     </DataTrigger>
-                                                    <DataTrigger Binding="{Binding AlreadyWatched}" Value="0">
+                                                    <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="0">
                                                         <Setter Property="IsChecked" Value="False" />
                                                     </DataTrigger>
                                                 </Style.Triggers>

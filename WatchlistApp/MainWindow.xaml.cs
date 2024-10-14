@@ -33,7 +33,6 @@ namespace WatchlistApp
 
         public List<Tag> filters = new List<Tag>(); // Tags welche gefiltert werden sollen
         public ObservableCollection<WatchlistShow> watchlist_shows { get; set; }
-        public ObservableCollection<Tag> current_show_tags { get; set; } = new ObservableCollection<Tag>();
         public ObservableCollection<Tag> tags { get; set; } // Liste an Tags fuer das anzeigen in der UI
 
         public ObservableCollection<Watchlist> _watchlists;
@@ -47,14 +46,14 @@ namespace WatchlistApp
             }
         }
 
-        public ObservableCollection<Show> _shows;
-        public ObservableCollection<Show> shows 
+        public ObservableCollection<ShowViewModel> _show_view_model;
+        public ObservableCollection<ShowViewModel> show_view_model 
         {
-            get { return _shows; }
+            get { return _show_view_model; }
             set
             {
-                _shows = value;
-                OnPropertyChanged(nameof(shows));
+                _show_view_model = value;
+                OnPropertyChanged(nameof(show_view_model));
             }
         }
 
@@ -76,14 +75,15 @@ namespace WatchlistApp
             watchlists = new ObservableCollection<Watchlist>(_watchlists); 
             var _tags = connection.GetTable<Tag>().ToList();
             tags = new ObservableCollection<Tag>(_tags);
-
+            show_view_model = new ObservableCollection<ShowViewModel>();
         }
 
         private void WatchlistSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            show_view_model.Clear();
             if (watchlist_listbox.SelectedItem is Watchlist selectedWatchlist)
             {
-                // Alle Shows, die in der aktuell ausgewählten Watchlist enthalten sind, abfragen und anzeigen.
+                // Alle Shows, die in der aktuell ausgewählten Watchlist enthalten sind
                 var showsForSelectedWatchlist = connection.GetTable<WatchlistShow>()
                     .Where(ws => ws.WlNr == selectedWatchlist.WlNr)
                     .Join(connection.GetTable<Show>(),
@@ -91,13 +91,8 @@ namespace WatchlistApp
                         show => show.ShowNr,
                         (ws, show) => show)
                     .ToList();
-
-                shows = new ObservableCollection<Show>(showsForSelectedWatchlist);
-
-                // Leere die aktuelle Tag-Liste
-                current_show_tags.Clear();
-
-                foreach (var show in shows)
+                
+                foreach (var show in showsForSelectedWatchlist)
                 {
                     var tagsForShow = connection.GetTable<ShowTag>()
                         .Where(st => st.ShowNr == show.ShowNr)
@@ -107,27 +102,27 @@ namespace WatchlistApp
                             (st, tag) => tag)
                         .ToList();
 
-                    // Füge die Tags zur aktuellen Tag-Liste hinzu
-                    foreach (var tag in tagsForShow)
+                    show_view_model.Add(new ShowViewModel
                     {
-                        current_show_tags.Add(tag);
-                    }
-
-                    // Ausgabe der Show-Informationen und der zugehörigen Tags in der Debug-Konsole.
-                    Debug.WriteLine($"Show: {show.Name} (ID: {show.ShowNr})");
-                    Debug.WriteLine("Tags:");
-
-                    foreach (var tag in tagsForShow)
-                    {
-                        Debug.WriteLine($" - {tag.Name} (ID: {tag.TagNr})");
-                    }
+                        show = new Show()
+                        {
+                            ShowNr = show.ShowNr,
+                            Name = show.Name,
+                            Description = show.Description,
+                            ReleaseDate = show.ReleaseDate,
+                            IsReleasing = show.IsReleasing,
+                            AlreadyWatched = show.AlreadyWatched,
+                            Image = show.Image
+                        },
+                        tags = new ObservableCollection<Tag>(tagsForShow)
+                    });
                 }
             }
         }
 
-
-        private void SearchShow(object sender, RoutedEventArgs e)
+        private void SearchShow(object sender, TextChangedEventArgs e)
         {
+            show_view_model.Clear();
             if (watchlist_listbox.SelectedItem is Watchlist selectedWatchlist)
             {
                 var query = connection.GetTable<WatchlistShow>()
@@ -144,13 +139,34 @@ namespace WatchlistApp
                     query = query.Where(s => s.Name.Contains(search_text_box.Text));
                 }
 
-                /* Die gefilterten Shows zu einer Liste verarbeiten und anschliessend
-                 * anzeigen */
                 var searched_shows = query.ToList();
-                shows = new ObservableCollection<Show>(searched_shows);
+                foreach (var show in searched_shows)
+                {
+                    var tagsForShow = connection.GetTable<ShowTag>()
+                        .Where(st => st.ShowNr == show.ShowNr)
+                        .Join(connection.GetTable<Tag>(),
+                            st => st.TagNr,
+                            tag => tag.TagNr,
+                            (st, tag) => tag)
+                        .ToList();
+
+                    show_view_model.Add(new ShowViewModel
+                    {
+                        show = new Show()
+                        {
+                            ShowNr = show.ShowNr,
+                            Name = show.Name,
+                            Description = show.Description,
+                            ReleaseDate = show.ReleaseDate,
+                            IsReleasing = show.IsReleasing,
+                            AlreadyWatched = show.AlreadyWatched,
+                            Image = show.Image
+                        },
+                        tags = new ObservableCollection<Tag>(tagsForShow)
+                    });
+                }
             }
         }
-
         private void AddWatchlist(object sender, RoutedEventArgs e)
         {
             AddWatchlistDialog dialog = new AddWatchlistDialog(connection, this);
@@ -189,20 +205,20 @@ namespace WatchlistApp
                     .Where(ws => ws.WlNr == watchlist_to_delete.WlNr)
                     .ToList();
 
-                // Jeden Watchlist Show Eintrag loeschen
+                // Jeden Watchlist Show Eintrag löschen
                 foreach (WatchlistShow watchlistshow in watchlistshows)
                 {
                     connection.Delete(watchlistshow);
                 }
 
-                // Jede Show in der Watchlist loeschen
+                // Jede Show in der Watchlist löschen
                 foreach (Show show in shows_for_selected_watchlist)
                 {
                     var show_tags_to_delete = connection.GetTable<ShowTag>()
                         .Where(st => st.ShowNr == show.ShowNr)
                         .ToList();
 
-                    // Jeden ShowTag eintrag der Show loeschen
+                    // Jeden ShowTag Eintrag der Show löschen
                     foreach (ShowTag show_tag in show_tags_to_delete)
                     {
                         connection.Delete(show_tag);
@@ -210,10 +226,9 @@ namespace WatchlistApp
                     connection.Delete(show);
                 }
 
-                // Watchlist selbst loeschen
+                // Watchlist selbst löschen
                 connection.Delete(watchlist_to_delete);
                 watchlists.Remove(watchlist_to_delete);
-                shows?.Clear();
             }
             else
             {
@@ -221,13 +236,13 @@ namespace WatchlistApp
             }
         }
 
-
         private void RemoveShowFromWatchlist(object sender, RoutedEventArgs e)
         {
             var button = sender as Button;
-            var show_to_delete = button?.DataContext as Show;
-            if (show_to_delete != null) 
+            var showviewmodel = button?.DataContext as ShowViewModel;
+            if (showviewmodel != null) 
             {
+                var show_to_delete = showviewmodel.show;
                 // WatchlistShow, die die zu entfernende Show enthaelt 
                 var watchlistshow_with_show_to_delete = connection.GetTable<WatchlistShow>()
                     .FirstOrDefault(ws => ws.ShowNr == show_to_delete.ShowNr);
@@ -250,7 +265,7 @@ namespace WatchlistApp
 
                     // Show generell loeschen
                     connection.Delete(show_to_delete);
-                    shows.Remove(show_to_delete);
+                    show_view_model.Remove(showviewmodel);
                 }
                 return;
             }
@@ -263,21 +278,24 @@ namespace WatchlistApp
         private void IsReleasingChecked(object sender, RoutedEventArgs e)
         {
             var check_box = sender as CheckBox;
-            var show_to_update = check_box?.DataContext as Show;
-            if (show_to_update != null)
+            var show_view_model = check_box?.DataContext as ShowViewModel;
+            if (show_view_model != null && show_view_model.show != null)
             {
+                var show_to_update = show_view_model.show;
                 show_to_update.IsReleasing = 1;
                 connection.Update(show_to_update);
             }
             return;
         }
 
+
         private void IsReleasingUnchecked(object sender, RoutedEventArgs e)
         {
             var check_box = sender as CheckBox;
-            var show_to_update = check_box?.DataContext as Show;
-            if (show_to_update != null)
+            var show_view_model = check_box?.DataContext as ShowViewModel;
+            if (show_view_model != null && show_view_model.show != null)
             {
+                var show_to_update = show_view_model.show;
                 show_to_update.IsReleasing = 0;
                 connection.Update(show_to_update);
             }
@@ -287,9 +305,10 @@ namespace WatchlistApp
         private void AlreadyWatchedChecked(object sender, RoutedEventArgs e)
         {
             var check_box = sender as CheckBox;
-            var show_to_update = check_box?.DataContext as Show;
-            if (show_to_update != null)
+            var show_view_model = check_box?.DataContext as ShowViewModel;
+            if (show_view_model != null && show_view_model.show != null)
             {
+                var show_to_update = show_view_model.show;
                 show_to_update.AlreadyWatched = 1;
                 connection.Update(show_to_update);
             }
@@ -299,9 +318,10 @@ namespace WatchlistApp
         private void AlreadyWatchedUnchecked(object sender, RoutedEventArgs e)
         {
             var check_box = sender as CheckBox;
-            var show_to_update = check_box?.DataContext as Show;
-            if (show_to_update != null)
+            var show_view_model = check_box?.DataContext as ShowViewModel;
+            if (show_view_model != null && show_view_model.show != null)
             {
+                var show_to_update = show_view_model.show;
                 show_to_update.AlreadyWatched = 0;
                 connection.Update(show_to_update);
             }
