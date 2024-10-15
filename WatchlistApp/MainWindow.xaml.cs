@@ -342,12 +342,56 @@ namespace WatchlistApp
                     return;
                 }
             }
-            FilterShows();
         }
 
-        private void FilterShows()
+        private void SearchClicked(object sender, RoutedEventArgs e)
         {
-            
+            int requiredTagCount = filters.Count;
+
+            if (requiredTagCount == 0)
+            {
+                WatchlistSelectionChanged(null, null);
+                return;
+            }
+
+            if (watchlist_listbox.SelectedItem is not Watchlist selectedWatchlist)
+            {
+                MessageBox.Show("Bitte wählen Sie eine Watchlist aus.");
+                return;
+            }
+
+            // Shows die zur ausgewaehlten Watchlist gehoeren und angegebene Tags haben
+            var matchedShows = connection.GetTable<WatchlistShow>()
+                .Where(ws => ws.WlNr == selectedWatchlist.WlNr) 
+                .Join(connection.GetTable<Show>(),
+                    ws => ws.ShowNr,
+                    show => show.ShowNr,
+                    (ws, show) => show)
+                .Where(show =>
+                    // Filter Shows basierend auf der Anzahl der zugeordneten Tags
+                    connection.GetTable<ShowTag>()
+                        .Where(st => st.ShowNr == show.ShowNr && filters.Select(f => f.TagNr).Contains(st.TagNr))
+                        .Count() == requiredTagCount
+                ).ToList();
+
+            // Aktualisiere die ShowViewModel-Liste mit den gefilterten Shows
+            show_view_model.Clear();
+            foreach (var show in matchedShows)
+            {
+                var tagsForShow = connection.GetTable<ShowTag>()
+                    .Where(st => st.ShowNr == show.ShowNr)
+                    .Join(connection.GetTable<Tag>(),
+                        st => st.TagNr,
+                        tag => tag.TagNr,
+                        (st, tag) => tag)
+                    .ToList();
+
+                show_view_model.Add(new ShowViewModel
+                {
+                    show = show,
+                    tags = new ObservableCollection<Tag>(tagsForShow)
+                });
+            }
         }
     }
 }

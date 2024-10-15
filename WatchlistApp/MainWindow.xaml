@@ -57,6 +57,7 @@
                     </ListBox>
                 </Expander>
                 <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow" />
+                <Button Content="Suchen" Click="SearchClicked"/>
             </StackPanel>
         </Grid>
 

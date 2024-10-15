@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WatchlistApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f399f46ba347100a9d5d47b661b8466ba771714")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+113f604f0f2a0dadda5bf243abea31112cdd5afd")]
 [assembly: System.Reflection.AssemblyProductAttribute("WatchlistApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WatchlistApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
