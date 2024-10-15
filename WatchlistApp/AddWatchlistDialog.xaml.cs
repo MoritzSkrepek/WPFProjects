@@ -1,10 +1,7 @@
 ﻿using DataModel;
 using LinqToDB;
-using Microsoft.Win32;
 using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 
 namespace WatchlistApp
@@ -14,47 +11,76 @@ namespace WatchlistApp
     /// </summary>
     public partial class AddWatchlistDialog : Window
     {
-        private readonly WatchlistDatabaseDb connection;
-        private MainWindow main_window;
+        #region Fields
+        private readonly WatchlistDatabaseDb _databaseConnection;
+        private readonly MainWindow _mainWindow;
+        #endregion
 
-        public AddWatchlistDialog(WatchlistDatabaseDb c, MainWindow mw)
+        #region Constructor
+        public AddWatchlistDialog(WatchlistDatabaseDb databaseConnection, MainWindow mainWindow)
         {
-            connection = c;
-            main_window = mw;
+            _databaseConnection = databaseConnection;
+            _mainWindow = mainWindow;
             InitializeComponent();
             DataContext = this;
         }
+        #endregion
 
+        #region Event Handlers
         private void AddWatchlistToDatabase(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(new_watchlist_field.Text))
+            if (string.IsNullOrWhiteSpace(new_watchlist_field.Text))
             {
-                Watchlist new_watchlist = new Watchlist()
-                {
-                    Name = new_watchlist_field.Text
-                };
-                connection.Insert(new_watchlist);
+                ShowError("Bitte füllen Sie das Namensfeld aus");
+                return;
+            }
 
-                // Abrufen der eingefügten Watchlist, um sicherzugehen, dass sie korrekt hinzugefügt wurde
-                var insertedWatchlist = connection.GetTable<Watchlist>()
-                    .OrderByDescending(w => w.WlNr)
-                    .FirstOrDefault();
+            var newWatchlist = CreateNewWatchlist(new_watchlist_field.Text);
+            InsertWatchlistIntoDatabase(newWatchlist);
+        }
+        #endregion
 
-                if (insertedWatchlist != null)
-                {
-                    main_window.watchlists.Add(insertedWatchlist);
-                    main_window.watchlist_listbox.SelectedItem = insertedWatchlist; // Optional: neue Watchlist auswählen
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("[ERROR]: Fehler beim hinzufügen der Watchlist");
-                }
+        #region Private Methods
+        private Watchlist CreateNewWatchlist(string watchlistName)
+        {
+            return new Watchlist
+            {
+                Name = watchlistName
+            };
+        }
+
+        private void InsertWatchlistIntoDatabase(Watchlist watchlist)
+        {
+            _databaseConnection.Insert(watchlist);
+
+            var insertedWatchlist = GetInsertedWatchlist();
+            if (insertedWatchlist != null)
+            {
+                AddWatchlistToMainWindow(insertedWatchlist);
+                Close();
             }
             else
             {
-                MessageBox.Show("[ERROR]: Bitte füllen Sie das Namensfeld aus");
+                ShowError("Fehler beim Hinzufügen der Watchlist");
             }
         }
+
+        private Watchlist GetInsertedWatchlist()
+        {
+            return _databaseConnection.GetTable<Watchlist>()
+                .OrderByDescending(w => w.WlNr)
+                .FirstOrDefault();
+        }
+
+        private void AddWatchlistToMainWindow(Watchlist watchlist)
+        {
+            _mainWindow.watchlists.Add(watchlist);
+        }
+
+        private void ShowError(string message)
+        {
+            MessageBox.Show($"[ERROR]: {message}");
+        }
+        #endregion
     }
 }

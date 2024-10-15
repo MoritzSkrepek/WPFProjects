@@ -40,7 +40,7 @@
             <CheckBox x:Name="show_already_watched_checkbox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
 
             <Label Content="Tags" Grid.Column="0" Grid.Row="5"/>
-            <ListBox x:Name="tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="5" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="TagsSelectionChanged">
+            <ListBox x:Name="tags_listbox" ItemsSource="{Binding Tags}" Grid.Column="1" Grid.Row="5" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="TagsSelectionChanged">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
@@ -62,7 +62,7 @@
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
 
-                <Image Source="{Binding show_image}" Width="100" Height="100" Grid.Row="0"/>
+                <Image Source="{Binding ShowImage}" Width="100" Height="100" Grid.Row="0"/>
                 <Button Content="Bild öffnen" Click="SelectImage" Grid.Row="1"/>
             </Grid>
             <Button Content="Show hinzufügen" Grid.Row="7" Grid.ColumnSpan="2" Click="AddShowToWatchlist"/>

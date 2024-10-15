@@ -1,25 +1,14 @@
 ﻿using DataModel;
 using LinqToDB;
-using LinqToDB.SqlQuery;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using static LinqToDB.DataProvider.SqlServer.SqlServerProviderAdapter;
 
 namespace WatchlistApp
 {
@@ -28,127 +17,157 @@ namespace WatchlistApp
     /// </summary>
     public partial class AddShowDialog : Window, INotifyPropertyChanged
     {
+        #region Fields
         public event PropertyChangedEventHandler? PropertyChanged;
-        public ObservableCollection<Tag> tags { get; set; }
+        public ObservableCollection<Tag> Tags { get; set; }
+        private List<Tag> _selectedTags = new List<Tag>();
+        private readonly WatchlistDatabaseDb _connection;
+        private readonly Watchlist _selectedWatchlist;
+        private readonly MainWindow _mainWindow;
 
-        private List<Tag> selected_tags = new List<Tag>();
-        private readonly WatchlistDatabaseDb connection;
-        private Watchlist selected_watchlist;
-        private MainWindow main_window;
-        private string title;
-        private string description;
-        private string releasedate;
-        private long stillreleasing;
-        private long alreadywatched;
-        private byte[] image_bytes; 
+        private string _title;
+        private string _description;
+        private string _releaseDate;
+        private long _stillReleasing;
+        private long _alreadyWatched;
+        private byte[] _imageBytes;
 
-        private BitmapImage _show_image;
-        public BitmapImage show_image
+        private BitmapImage _showImage;
+        public BitmapImage ShowImage
         {
-            get { return _show_image; }
+            get => _showImage;
             set
             {
-                _show_image = value;
-                OnPropertyChanged(nameof(show_image));
+                _showImage = value;
+                OnPropertyChanged(nameof(ShowImage));
             }
         }
+        #endregion
 
-        public AddShowDialog(WatchlistDatabaseDb c, Watchlist wl, ObservableCollection<Tag> t, MainWindow mw)
+        #region Constructor
+        public AddShowDialog(WatchlistDatabaseDb connection, Watchlist watchlist, ObservableCollection<Tag> tags, MainWindow mainWindow)
         {
-            connection = c;
-            selected_watchlist = wl;
-            main_window = mw;
-            tags = t;
+            _connection = connection;
+            _selectedWatchlist = watchlist;
+            _mainWindow = mainWindow;
+            Tags = tags;
             InitializeComponent();
             DataContext = this;
         }
+        #endregion
 
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        #region Event Handlers
         private void SelectImage(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.DefaultExt = ".png";
-            fileDialog.Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp";
+            var fileDialog = new OpenFileDialog
+            {
+                DefaultExt = ".png",
+                Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+            };
+
             if (fileDialog.ShowDialog() == true)
             {
-                image_bytes = File.ReadAllBytes(fileDialog.FileName);
-                show_image = new BitmapImage(new Uri(fileDialog.FileName));
+                _imageBytes = File.ReadAllBytes(fileDialog.FileName);
+                ShowImage = new BitmapImage(new Uri(fileDialog.FileName));
             }
         }
 
         private void AddShowToWatchlist(object sender, RoutedEventArgs e)
         {
             SetVariables();
-            if (!string.IsNullOrEmpty(title) && !string.IsNullOrEmpty(description) && !string.IsNullOrEmpty(releasedate) && image_bytes != null)
+            if (ValidateInput())
             {
-                InsertShow();
-                var inserted_show = connection.GetTable<Show>()
-                    .OrderByDescending(s => s.ShowNr)
-                    .FirstOrDefault();
-                if (inserted_show != null)
+                var insertedShow = InsertShow();
+                if (insertedShow != null)
                 {
-                    InsertShowTags(inserted_show);  // Tags hinzufügen bevor die UI aktualisiert wird
-                    InsertWatchlistShow(inserted_show);
-                    UpdateMainWindowUI();
+                    InsertShowTags(insertedShow);
+                    LinkShowToWatchlist(insertedShow);
+                    RefreshMainWindowShows();
                 }
-                this.Close();
+                Close();
             }
             else
             {
-                MessageBox.Show("[ERROR]: Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus!");
+                ShowError("Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus!");
             }
         }
 
-
-        private void InsertShowTags(Show inserted_show)
+        private void TagsSelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            foreach (Tag tag in selected_tags)
-            {
-                ShowTag show_tag = new ShowTag()
-                {
-                    ShowNr = inserted_show.ShowNr,
-                    TagNr = tag.TagNr,
-                };
-                connection.Insert(show_tag);
-            }
+            UpdateSelectedTags();
         }
+        #endregion
 
+        #region Private Methods
         private void SetVariables()
         {
-            title = show_titel_textblock.Text;
-            description = show_name_description_textblock.Text;
-            releasedate = show_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
-            stillreleasing = show_still_releasing_checkbox.IsChecked == true ? 1 : 0;
-            alreadywatched = show_already_watched_checkbox.IsChecked == true ? 1 : 0;
+            _title = show_titel_textblock.Text;
+            _description = show_name_description_textblock.Text;
+            _releaseDate = show_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+            _stillReleasing = show_still_releasing_checkbox.IsChecked == true ? 1 : 0;
+            _alreadyWatched = show_already_watched_checkbox.IsChecked == true ? 1 : 0;
         }
 
-        private void UpdateMainWindowUI()
+        private bool ValidateInput()
         {
-            main_window.show_view_model.Clear();
-            var currentShows = connection.GetTable<WatchlistShow>()
-                .Where(ws => ws.WlNr == selected_watchlist.WlNr)
-                .Join(connection.GetTable<Show>(),
-                    ws => ws.ShowNr,
-                    show => show.ShowNr,
-                    (ws, show) => show)
-                .ToList();
+            return !string.IsNullOrEmpty(_title) &&
+                   !string.IsNullOrEmpty(_description) &&
+                   !string.IsNullOrEmpty(_releaseDate) &&
+                   _imageBytes != null;
+        }
+
+        private Show InsertShow()
+        {
+            var show = new Show
+            {
+                Name = _title,
+                Description = _description,
+                ReleaseDate = _releaseDate,
+                IsReleasing = _stillReleasing,
+                AlreadyWatched = _alreadyWatched,
+                Image = _imageBytes
+            };
+            _connection.Insert(show);
+
+            return _connection.GetTable<Show>()
+                .OrderByDescending(s => s.ShowNr)
+                .FirstOrDefault();
+        }
+
+        private void InsertShowTags(Show insertedShow)
+        {
+            foreach (var tag in _selectedTags)
+            {
+                var showTag = new ShowTag
+                {
+                    ShowNr = insertedShow.ShowNr,
+                    TagNr = tag.TagNr,
+                };
+                _connection.Insert(showTag);
+            }
+        }
+
+        private void LinkShowToWatchlist(Show insertedShow)
+        {
+            var watchlistShow = new WatchlistShow
+            {
+                WlNr = _selectedWatchlist.WlNr,
+                ShowNr = insertedShow.ShowNr
+            };
+            _connection.Insert(watchlistShow);
+        }
+
+        private void RefreshMainWindowShows()
+        {
+            _mainWindow.show_view_models.Clear();
+            var currentShows = GetCurrentShows();
 
             foreach (var show in currentShows)
             {
-                var tagsForShow = connection.GetTable<ShowTag>()
-                        .Where(st => st.ShowNr == show.ShowNr)
-                        .Join(connection.GetTable<Tag>(),
-                            st => st.TagNr,
-                            tag => tag.TagNr,
-                            (st, tag) => tag)
-                        .ToList();
-                main_window.show_view_model.Add(new ShowViewModel
+                var tagsForShow = GetTagsForShow(show.ShowNr);
+                _mainWindow.show_view_models.Add(new ShowViewModel
                 {
-                    show = new Show()
+                    show = new Show
                     {
                         ShowNr = show.ShowNr,
                         Name = show.Name,
@@ -163,45 +182,49 @@ namespace WatchlistApp
             }
         }
 
-        private void InsertWatchlistShow(Show insertedShow)
+        private List<Show> GetCurrentShows()
         {
-            WatchlistShow watchlistShow = new WatchlistShow()
-            {
-                WlNr = selected_watchlist.WlNr,
-                ShowNr = insertedShow.ShowNr
-            };
-
-            connection.Insert(watchlistShow);
+            return _connection.GetTable<WatchlistShow>()
+                .Where(ws => ws.WlNr == _selectedWatchlist.WlNr)
+                .Join(_connection.GetTable<Show>(),
+                      ws => ws.ShowNr,
+                      show => show.ShowNr,
+                      (ws, show) => show)
+                .ToList();
         }
 
-        private void InsertShow()
+        private List<Tag> GetTagsForShow(long showNr)
         {
-            Show show = new Show()
-            {
-                Name = title,
-                Description = description,
-                ReleaseDate = releasedate,
-                IsReleasing = stillreleasing,
-                AlreadyWatched = alreadywatched,
-                Image = image_bytes
-            };
-            connection.Insert(show);
+            return _connection.GetTable<ShowTag>()
+                .Where(st => st.ShowNr == showNr)
+                .Join(_connection.GetTable<Tag>(),
+                      st => st.TagNr,
+                      tag => tag.TagNr,
+                      (st, tag) => tag)
+                .ToList();
         }
 
-        private void TagsSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UpdateSelectedTags()
         {
-            selected_tags.Clear();
+            _selectedTags.Clear();
             foreach (var item in tags_listbox.SelectedItems)
             {
                 if (item is Tag tag)
                 {
-                    selected_tags.Add(tag);
-                }
-                else
-                {
-                    return;
+                    _selectedTags.Add(tag);
                 }
             }
         }
+
+        private void ShowError(string message)
+        {
+            MessageBox.Show($"[ERROR]: {message}");
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
 }

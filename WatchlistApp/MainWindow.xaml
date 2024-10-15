@@ -77,7 +77,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox x:Name="shows_listbox" ItemsSource="{Binding show_view_model}" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox x:Name="shows_listbox" ItemsSource="{Binding show_view_models}" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
