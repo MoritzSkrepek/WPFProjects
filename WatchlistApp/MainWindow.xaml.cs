@@ -293,6 +293,7 @@ namespace WatchlistApp
             {
                 showViewModel.show.CurrentEpisode += addend;
                 connection.Update(showViewModel.show);
+                WatchlistSelectionChanged(null, null);
             }
         }
 
