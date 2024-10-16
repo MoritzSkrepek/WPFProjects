@@ -7,14 +7,6 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addshowdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addshowdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addshowdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addshowdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addwatchlistdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -23,8 +15,20 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\showviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:showviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addshowdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addshowdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addshowdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:addshowdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\addwatchlistdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -38,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,20 +54,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
+              "Title": "ShowViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\ShowViewModel.cs",
+              "RelativeDocumentMoniker": "ShowViewModel.cs",
+              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\ShowViewModel.cs",
+              "RelativeToolTip": "ShowViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T13:35:12.327Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Show.cs",
+              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
+              "RelativeDocumentMoniker": "Show.cs",
+              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
+              "RelativeToolTip": "Show.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-16T13:26:23.759Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "AddShowDialog.xaml.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddShowDialog.xaml.cs",
               "RelativeDocumentMoniker": "AddShowDialog.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddShowDialog.xaml.cs",
               "RelativeToolTip": "AddShowDialog.xaml.cs",
-              "ViewState": "AgIAAJEAAAAAAAAAAAAUwCMAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAMcAAAAAAAAAAAAUwHkAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T15:57:11.04Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 6,
               "Title": "AddShowDialog.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddShowDialog.xaml",
               "RelativeDocumentMoniker": "AddShowDialog.xaml",
@@ -75,19 +105,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ShowViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\ShowViewModel.cs",
-              "RelativeDocumentMoniker": "ShowViewModel.cs",
-              "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\ShowViewModel.cs",
-              "RelativeToolTip": "ShowViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-14T15:35:00.433Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "AddWatchlistDialog.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddWatchlistDialog.xaml",
               "RelativeDocumentMoniker": "AddWatchlistDialog.xaml",
@@ -99,20 +117,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "AddWatchlistDialog.xaml.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddWatchlistDialog.xaml.cs",
               "RelativeDocumentMoniker": "AddWatchlistDialog.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\AddWatchlistDialog.xaml.cs",
               "RelativeToolTip": "AddWatchlistDialog.xaml.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAswEwAAAAyAAAAAAAAAA==",
+              "ViewState": "AgIAADIAAAAAAAAAAAAwwCEAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T15:02:08.956Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -130,7 +148,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAAgBAAAAAAAAAAAqwDEBAACVAAAAAAAAAA==",
+              "ViewState": "AgIAAAgBAAAAAAAAAAAqwCABAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T14:31:15.34Z",
               "EditorCaption": ""

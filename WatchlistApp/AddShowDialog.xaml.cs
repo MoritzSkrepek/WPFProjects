@@ -27,6 +27,7 @@ namespace WatchlistApp
 
         private string _title;
         private string _description;
+        private long _episodes;
         private string _releaseDate;
         private long _stillReleasing;
         private long _alreadyWatched;
@@ -101,8 +102,9 @@ namespace WatchlistApp
         #region Private Methods
         private void SetVariables()
         {
-            _title = show_titel_textblock.Text;
-            _description = show_name_description_textblock.Text;
+            _title = show_titel_textbox.Text;
+            _description = show_name_description_textbox.Text;
+            _episodes = long.Parse(show_episodes_textbox.Text);
             _releaseDate = show_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
             _stillReleasing = show_still_releasing_checkbox.IsChecked == true ? 1 : 0;
             _alreadyWatched = show_already_watched_checkbox.IsChecked == true ? 1 : 0;
@@ -122,6 +124,8 @@ namespace WatchlistApp
             {
                 Name = _title,
                 Description = _description,
+                Episodes = _episodes,
+                CurrentEpisode = 0,
                 ReleaseDate = _releaseDate,
                 IsReleasing = _stillReleasing,
                 AlreadyWatched = _alreadyWatched,
@@ -171,6 +175,8 @@ namespace WatchlistApp
                     {
                         ShowNr = show.ShowNr,
                         Name = show.Name,
+                        Episodes = show.Episodes,
+                        CurrentEpisode = 0,
                         Description = show.Description,
                         ReleaseDate = show.ReleaseDate,
                         IsReleasing = show.IsReleasing,

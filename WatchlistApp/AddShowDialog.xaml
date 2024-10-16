@@ -14,33 +14,37 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Label Content="Show Titel" Grid.Column="0" Grid.Row="0"/>
-            <TextBox x:Name="show_titel_textblock"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="0"/>
+            <TextBox x:Name="show_titel_textbox"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="0"/>
 
             <Label Content="Beschreibung" Grid.Column="0" Grid.Row="1"/>
-            <TextBox x:Name="show_name_description_textblock" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="1"/>
+            <TextBox x:Name="show_name_description_textbox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="1"/>
 
-            <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="2"/>
-            <DatePicker x:Name="show_release_date_picker" SelectedDateFormat="Long" Grid.Column="1" Grid.Row="2"/>
+            <Label Content="Episoden" Grid.Column="0" Grid.Row="2"/>
+            <TextBox x:Name="show_episodes_textbox" Height="auto" Grid.Column="1" Grid.Row="2"/>
 
-            <Label Content="Wird noch veröffentlicht" Grid.Column="0" Grid.Row="3"/>
-            <CheckBox x:Name="show_still_releasing_checkbox" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center"/>
+            <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="3"/>
+            <DatePicker x:Name="show_release_date_picker" SelectedDateFormat="Long" Grid.Column="1" Grid.Row="3"/>
 
-            <Label Content="Bereits gesehen" Grid.Column="0" Grid.Row="4"/>
-            <CheckBox x:Name="show_already_watched_checkbox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+            <Label Content="Wird noch veröffentlicht" Grid.Column="0" Grid.Row="4"/>
+            <CheckBox x:Name="show_still_releasing_checkbox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
 
-            <Label Content="Tags" Grid.Column="0" Grid.Row="5"/>
-            <ListBox x:Name="tags_listbox" ItemsSource="{Binding Tags}" Grid.Column="1" Grid.Row="5" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="TagsSelectionChanged">
+            <Label Content="Bereits gesehen" Grid.Column="0" Grid.Row="5"/>
+            <CheckBox x:Name="show_already_watched_checkbox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
+
+            <Label Content="Tags" Grid.Column="0" Grid.Row="6"/>
+            <ListBox x:Name="tags_listbox" ItemsSource="{Binding Tags}" Grid.Column="1" Grid.Row="6" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="TagsSelectionChanged">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel Orientation="Horizontal"/>
@@ -55,8 +59,8 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-            <Label Content="Titelbild" Grid.Column="0" Grid.Row="6"/>
-            <Grid Grid.Column="1" Grid.Row="6">
+            <Label Content="Titelbild" Grid.Column="0" Grid.Row="7"/>
+            <Grid Grid.Column="1" Grid.Row="7">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
@@ -65,7 +69,7 @@
                 <Image Source="{Binding ShowImage}" Width="100" Height="100" Grid.Row="0"/>
                 <Button Content="Bild öffnen" Click="SelectImage" Grid.Row="1"/>
             </Grid>
-            <Button Content="Show hinzufügen" Grid.Row="7" Grid.ColumnSpan="2" Click="AddShowToWatchlist"/>
+            <Button Content="Show hinzufügen" Grid.Row="8" Grid.ColumnSpan="2" Click="AddShowToWatchlist"/>
         </Grid>
     </ScrollViewer>
 </Window>

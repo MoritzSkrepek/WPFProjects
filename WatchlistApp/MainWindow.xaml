@@ -43,7 +43,8 @@
 
             <StackPanel Orientation="Horizontal" Grid.Row="0">
                 <Expander Header="Filter" Margin="5">
-                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged">
+                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" 
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" />
@@ -61,7 +62,8 @@
             </StackPanel>
         </Grid>
 
-        <ListBox x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" SelectionChanged="WatchlistSelectionChanged">
+        <ListBox x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" 
+                 SelectionChanged="WatchlistSelectionChanged">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -69,7 +71,8 @@
                             <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
                         </Button>
                         <TextBlock Text="{Binding Name}" FontSize="16" Margin="5" VerticalAlignment="Center" />
-                        <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" HorizontalAlignment="Stretch" Click="AddShowToWatchlist">
+                        <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" 
+                                HorizontalAlignment="Stretch" Click="AddShowToWatchlist">
                             <Image Source="../resources/add_icon.png" Width="16" Height="16"/>
                         </Button>
                     </StackPanel>
@@ -77,7 +80,8 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox x:Name="shows_listbox" ItemsSource="{Binding show_view_models}" Grid.Column="1" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+        <ListBox x:Name="shows_listbox" ItemsSource="{Binding show_view_models}" Grid.Column="1" Grid.Row="1" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -93,22 +97,48 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Image Source="{Binding show.Image}" Stretch="UniformToFill" Height="200" Width="150" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Margin="5"/>
-                            <TextBlock Text="{Binding show.Name}" FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,5,5,5"/>
+                            <Image Source="{Binding show.Image}" Stretch="UniformToFill" Height="200" Width="150" Grid.Row="0" 
+                                   Grid.RowSpan="4" Grid.Column="0" Margin="5"/>
+                            <TextBlock Text="{Binding show.Name}" FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="1" 
+                                       VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,5,5,5"/>
 
                             <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto" Height="auto" Margin="5,0">
                                 <TextBlock Text="{Binding show.Description}" FontSize="14" TextWrapping="Wrap"/>
                             </ScrollViewer>
 
-                            <TextBlock Text="{Binding show.ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,5,5,0"/>
+                            <TextBlock Text="{Binding show.ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" 
+                                       Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,5,0"/>
 
-                            <ListBox x:Name="show_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="3" SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
+                            <Grid Grid.Row="3" Grid.Column="1" Margin="5,5,5,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0">
+                                    <Run Text="{Binding show.Episodes}" />
+                                    <Run Text=" Episoden" />
+                                </TextBlock>
+                                <Grid Grid.Column="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button Content="&lt;" Grid.Column="0" Click="CurrentEpisodeMinus" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="current_episode_textblock" Text="{Binding show.CurrentEpisode}" Width="auto" Grid.Column="1"/>
+                                    <Button Content="&gt;" Grid.Column="2" Click="CurrentEpisodePlus" VerticalAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                            
+                            <ListBox x:Name="show_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" SelectionMode="Multiple" 
+                                     ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Horizontal"/>
@@ -123,7 +153,7 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
 
-                            <Grid Grid.Row="4" Grid.Column="1" Margin="5,0,5,5" >
+                            <Grid Grid.Row="5" Grid.Column="1" Margin="5,0,5,5" >
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="Auto" />
@@ -165,7 +195,7 @@
                                         </CheckBox.Style>
                                     </CheckBox>
                                 </StackPanel>
-                                <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="RemoveShowFromWatchlist">
+                                <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="RemoveShowFromWatchlist" RenderTransformOrigin="0.5,0.5">
                                     <Image Source="../resources/remove_icon.png" Width="16" Height="16"/>
                                 </Button>
                             </Grid>

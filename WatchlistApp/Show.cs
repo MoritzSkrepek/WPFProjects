@@ -23,6 +23,8 @@ namespace DataModel
 		[Column("IsReleasing"                                                                                      )] public long   IsReleasing    { get; set; } // integer
 		[Column("Image"         , CanBeNull    = false                                                             )] public byte[] Image          { get; set; } = null!; // blob
 		[Column("AlreadyWatched"                                                                                   )] public long   AlreadyWatched { get; set; } // integer
+		[Column("Episodes"                                                                                         )] public long   Episodes       { get; set; } // integer
+		[Column("CurrentEpisode"                                                                                   )] public long?  CurrentEpisode { get; set; } // integer
 
 		#region Associations
 		/// <summary>

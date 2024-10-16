@@ -141,6 +141,8 @@ namespace WatchlistApp
         private void IsReleasingUnchecked(object sender, RoutedEventArgs e) => UpdateReleasingStatus(sender, e, false);
         private void AlreadyWatchedChecked(object sender, RoutedEventArgs e) => UpdateWatchedStatus(sender, e, true);
         private void AlreadyWatchedUnchecked(object sender, RoutedEventArgs e) => UpdateWatchedStatus(sender, e, false);
+        private void CurrentEpisodePlus(object sender, RoutedEventArgs e) => UpdateCurrentEpisodeStatus(sender, e, 1);
+        private void CurrentEpisodeMinus(object sender, RoutedEventArgs e) => UpdateCurrentEpisodeStatus(sender, e, -1);
 
         private void SelectedFilterChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -281,6 +283,15 @@ namespace WatchlistApp
             if (sender is CheckBox checkBox && checkBox.DataContext is ShowViewModel showViewModel)
             {
                 showViewModel.show.AlreadyWatched = alreadyWatched ? 1 : 0;
+                connection.Update(showViewModel.show);
+            }
+        }
+
+        private void UpdateCurrentEpisodeStatus(object sender, RoutedEventArgs e, long addend)
+        {
+            if (sender is Button button && button.DataContext is ShowViewModel showViewModel)
+            {
+                showViewModel.show.CurrentEpisode += addend;
                 connection.Update(showViewModel.show);
             }
         }
