@@ -28,7 +28,7 @@ namespace WatchlistApp
         public ObservableCollection<Watchlist> _watchlists;
         public ObservableCollection<Watchlist> watchlists
         {
-            get { return _watchlists; }
+            get => _watchlists;
             set
             {
                 _watchlists = value;
@@ -39,7 +39,7 @@ namespace WatchlistApp
         public ObservableCollection<ShowViewModel> _show_view_models;
         public ObservableCollection<ShowViewModel> show_view_models
         {
-            get { return _show_view_models; }
+            get => _show_view_models;
             set
             {
                 _show_view_models = value;
@@ -269,12 +269,6 @@ namespace WatchlistApp
             }
         }
 
-        public Show GetShow(ShowViewModel showViewModel)
-        {
-            return connection.GetTable<Show>()
-                .FirstOrDefault(s => s.ShowNr == showViewModel.show.ShowNr);
-        }
-
         private void UpdateReleasingStatus(object sender, RoutedEventArgs e, bool isReleasing)
         {
             if (sender is CheckBox checkBox && checkBox.DataContext is ShowViewModel showViewModel)
@@ -293,33 +287,17 @@ namespace WatchlistApp
             }
         }
 
-        /*private void UpdateCurrentEpisodeStatus(object sender, RoutedEventArgs e, long addend)
-        {
-            if (sender is Button button && button.DataContext is ShowViewModel showViewModel)
-            {
-                showViewModel.show.CurrentEpisode += addend;
-                connection.Update(showViewModel.show);
-                show_view_models.Remove(showViewModel);
-                ShowViewModel svm = new ShowViewModel()
-                {
-                    show = GetShow(showViewModel),
-                    tags = new ObservableCollection<Tag>(GetTagsForShow(showViewModel.show.ShowNr))
-                };
-                show_view_models.Add(svm);
-            }
-        }*/
-
-        // Dumme Loesung, weil dann bei jeder Aenderung alle Shows neu geladen werden
         private void UpdateCurrentEpisodeStatus(object sender, RoutedEventArgs e, long addend)
         {
             if (sender is Button button && button.DataContext is ShowViewModel showViewModel)
             {
-                showViewModel.show.CurrentEpisode += addend;
-                connection.Update(showViewModel.show);
-                WatchlistSelectionChanged(null, null);
+                if ((showViewModel.show.CurrentEpisode ?? 0) + addend >= 1)
+                {
+                    showViewModel.show.CurrentEpisode += addend;
+                    connection.Update(showViewModel.show);
+                }
             }
         }
-
 
         private List<Show> GetFilteredShows(Watchlist selectedWatchlist)
         {
