@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         ResizeMode="CanResizeWithGrip"
         MinHeight="400"
-        MinWidth="650"
+        MinWidth="670"
         Title="MainWindow">
     <Window.Resources>
         <Style x:Key="ImageButtonStyle" TargetType="Button">
@@ -23,7 +23,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="main_content">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" MinWidth="150"/>
             <ColumnDefinition Width="*" MinWidth="300"/>
@@ -41,7 +41,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <WrapPanel Orientation="Horizontal" Grid.Row="0">
                 <Expander Header="Filter" Margin="5">
                     <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" 
                              ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged">
@@ -59,7 +59,7 @@
                 </Expander>
                 <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow" />
                 <Button Content="Suchen" Click="SearchClicked"/>
-            </StackPanel>
+            </WrapPanel>
         </Grid>
 
         <ListBox x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" 
@@ -123,7 +123,7 @@
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0">
                                     <Run Text="{Binding show.Episodes}" />
-                                    <Run Text=" Episoden" />
+                                    <Run Text="Episoden" />
                                 </TextBlock>
                                 <Grid Grid.Column="2">
                                     <Grid.ColumnDefinitions>
@@ -155,9 +155,9 @@
 
                             <Grid Grid.Row="5" Grid.Column="1" Margin="5,0,5,5" >
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                                     <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -204,5 +204,88 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+
+        <!-- PopUp fuer das hinzufuegen einer neuen Watchlist -->
+        <Popup x:Name="addWatchlistPopup" Placement="Center" IsOpen="False" StaysOpen="False">
+            <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="5">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="new_watchlist_field" Width="200" Margin="0,0,10,0"/>
+                    <Button Content="Hinzufügen" Click="AddWatchlistToDatabase" />
+                </StackPanel>
+            </Border>
+        </Popup>
+        
+        <!-- PopUp fuer das hinzufuegen einer neuen Show zu einer Watchlist -->
+        <Popup x:Name="addShowPopup" Placement="Center" IsOpen="False" StaysOpen="True" MinWidth="450" MaxWidth="450">
+            <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Show Titel" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox x:Name="show_titel_textbox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="0"/>
+
+                    <Label Content="Beschreibung" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox x:Name="show_name_description_textbox" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="1"/>
+
+                    <Label Content="Episoden" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox x:Name="show_episodes_textbox" Height="auto" Grid.Column="1" Grid.Row="2"/>
+
+                    <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="3"/>
+                    <DatePicker x:Name="show_release_date_picker" SelectedDateFormat="Long" Grid.Column="1" Grid.Row="3"/>
+
+                    <Label Content="Wird noch veröffentlicht" Grid.Column="0" Grid.Row="4"/>
+                    <CheckBox x:Name="show_still_releasing_checkbox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center"/>
+
+                    <Label Content="Bereits gesehen" Grid.Column="0" Grid.Row="5"/>
+                    <CheckBox x:Name="show_already_watched_checkbox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center"/>
+
+                    <Label Content="Tags" Grid.Column="0" Grid.Row="6"/>
+                    <ListBox x:Name="tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="6" SelectionMode="Multiple"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="TagsSelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
+                                    <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label Content="Titelbild" Grid.Column="0" Grid.Row="7"/>
+                    <Grid Grid.Column="1" Grid.Row="7">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Image x:Name="show_image_image" Source="{Binding ShowImage}" Width="100" Height="100" Grid.Row="0"/>
+                        <Button Content="Bild öffnen" Click="SelectImage" Grid.Row="1"/>
+                    </Grid>
+                    <Button Content="Show hinzufügen" Click="AddShowToDatabase" Grid.Row="8" Grid.Column="1"/>
+                    <Button Content="Abbrechen" Click="CancelAddShowToDatabase" Grid.Row="8" Grid.Column="0"/>
+                </Grid>
+            </Border>
+        </Popup>
     </Grid>
 </Window>

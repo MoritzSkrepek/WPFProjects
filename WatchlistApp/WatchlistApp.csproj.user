@@ -7,20 +7,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AddShowDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="AddWatchlistDialog.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Update="AddShowDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="AddWatchlistDialog.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
