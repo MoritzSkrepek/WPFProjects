@@ -26,6 +26,9 @@ namespace WatchlistApp
         private Watchlist _selectedWatchlist;
         private string _title, _description, _releaseDate;
         private long _episodes, _stillReleasing, _alreadyWatched;
+        private string _edit_title, _edit_description, _edit_releaseDate;
+        private long _edit_episodes, _edit_stillReleasing, _edit_alreadyWatched;
+        private byte[] _edit_imageBytes;
         private byte[] _imageBytes;
         private BitmapImage _showImage;
         public BitmapImage ShowImage
@@ -37,6 +40,8 @@ namespace WatchlistApp
                 OnPropertyChanged(nameof(ShowImage));
             }
         }
+
+        public ShowViewModel _edit_showviewmodel { get; set; }
 
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
@@ -159,7 +164,11 @@ namespace WatchlistApp
         private void CurrentEpisodeMinus(object sender, RoutedEventArgs e) => UpdateCurrentEpisodeStatus(sender, e, -1);
         private void TagsSelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateSelectedTags();
         private void CancelAddShowToDatabase(object sender, RoutedEventArgs e) => CloseNewShowPopUp();
+        private void CancelEditShowToDatabase(object sender, RoutedEventArgs e) => CloseEditPopup();
         private void AddWatchlist(object sender, RoutedEventArgs e) => OpenNewWatchlistPopUp();
+        private void editShow(object sender, RoutedEventArgs e) => OpenEditShowPopup(sender, e);
+        private void UpdateShowDatabase(object sender, RoutedEventArgs e) => UpdateEditedShow();
+        private void RemoveTagFromShow(object sender, RoutedEventArgs e) => RemoveTag(sender, e);
 
         private void SelectedFilterChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -240,6 +249,22 @@ namespace WatchlistApp
             {
                 _imageBytes = File.ReadAllBytes(fileDialog.FileName);
                 ShowImage = new BitmapImage(new Uri(fileDialog.FileName));
+            }
+        }
+
+        private void SelectNewImage(object sender, RoutedEventArgs e)
+        {
+            var fileDialog = new OpenFileDialog
+            {
+                DefaultExt = ".png",
+                Filter = "Image files (*.png;*.jpg;*.jpeg;*.bmp)|*.png;*.jpg;*.jpeg;*.bmp"
+            };
+
+            if (fileDialog.ShowDialog() == true)
+            {
+                _edit_imageBytes = File.ReadAllBytes(fileDialog.FileName);
+                ShowImage = new BitmapImage(new Uri(fileDialog.FileName));
+                show_edit_image_image.Source = ShowImage;
             }
         }
         #endregion
@@ -425,6 +450,43 @@ namespace WatchlistApp
             new_watchlist_field.Text = string.Empty;
         }
 
+        private void OpenEditShowPopup(object sender, RoutedEventArgs e)
+        {
+            main_content.Effect = new BlurEffect { Radius = 10 };
+            editShowPopup.IsOpen = true;
+            LoadShowToEdit(sender, e);
+        }
+
+        private void CloseEditPopup()
+        {
+            editShowPopup.IsOpen = false;
+            main_content.Effect = null;
+        }
+
+        private void LoadShowToEdit(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is ShowViewModel showViewModel)
+            {
+                _edit_showviewmodel = new ShowViewModel
+                {
+                    show = new Show
+                    {
+                        ShowNr = showViewModel.show.ShowNr,
+                        Name = showViewModel.show.Name,
+                        Image = showViewModel.show.Image,
+                        Description = showViewModel.show.Description,
+                        Episodes = showViewModel.show.Episodes,
+                        CurrentEpisode = showViewModel.show.CurrentEpisode,
+                        ReleaseDate = showViewModel.show.ReleaseDate,
+                        IsReleasing = showViewModel.show.IsReleasing,
+                        AlreadyWatched = showViewModel.show.AlreadyWatched,
+                    },
+                    tags = new ObservableCollection<Tag>(showViewModel.tags)
+                };
+                editShowPopup.DataContext = _edit_showviewmodel;
+            }
+        }
+
         private Watchlist CreateNewWatchlist(string watchlistName)
         {
             return new Watchlist
@@ -524,6 +586,38 @@ namespace WatchlistApp
                 {
                     _selectedTags.Add(tag);
                 }
+            }
+        }
+
+        private void UpdateEditedShow()
+        {
+            _edit_showviewmodel.show.Name = show_edit_titel_textbox.Text;
+            _edit_showviewmodel.show.Description = show_edit_name_description_textbox.Text;
+            _edit_showviewmodel.show.Episodes = long.Parse(show_edit_episodes_textbox.Text);
+            _edit_showviewmodel.show.ReleaseDate = show_edit_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+            _edit_showviewmodel.show.Image = _edit_imageBytes;
+            connection.Update(_edit_showviewmodel.show);
+            CloseEditPopup();
+        }
+
+        private void RemoveTag(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Tag tag)
+            {
+                _edit_showviewmodel.tags.Remove(tag);
+                long shownr = _edit_showviewmodel.show.ShowNr;
+                long tagnr = tag.TagNr;
+                var showtag = connection.GetTable<ShowTag>()
+                    .FirstOrDefault(st => st.ShowNr == shownr && st.TagNr == tagnr);
+                if (showtag != null)
+                {
+                    connection.Delete(showtag);
+                }
+                else
+                {
+                    ShowError("Fehler beim entfernen des Tags!");
+                }
+                
             }
         }
 

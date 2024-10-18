@@ -89,7 +89,7 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Width="460" Height="250">
+                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5" Width="475" Height="250">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -158,6 +158,7 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Horizontal" Grid.Column="0">
                                     <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
@@ -198,6 +199,8 @@
                                 <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="RemoveShowFromWatchlist" RenderTransformOrigin="0.5,0.5">
                                     <Image Source="../resources/remove_icon.png" Width="16" Height="16"/>
                                 </Button>
+                                <!-- Style noch hinzufuegen -->
+                                <Button Content="x" Grid.Column="3" Click="editShow" Width="16" Height="16"/>
                             </Grid>
                         </Grid>
                     </Border>
@@ -284,6 +287,75 @@
                     </Grid>
                     <Button Content="Show hinzufügen" Click="AddShowToDatabase" Grid.Row="8" Grid.Column="1"/>
                     <Button Content="Abbrechen" Click="CancelAddShowToDatabase" Grid.Row="8" Grid.Column="0"/>
+                </Grid>
+            </Border>
+        </Popup>
+        
+        <!-- Popup fuer das bearbeiten einer Show -->
+        <Popup x:Name="editShowPopup" Placement="Center" IsOpen="False" StaysOpen="True" MinWidth="450" MaxWidth="450">
+            <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Show Titel" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox x:Name="show_edit_titel_textbox" Text="{Binding show.Name}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="0"/>
+
+                    <Label Content="Beschreibung" Grid.Column="0" Grid.Row="1"/>
+                    <TextBox x:Name="show_edit_name_description_textbox" Text="{Binding show.Description}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
+                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="1"/>
+
+                    <Label Content="Episoden" Grid.Column="0" Grid.Row="2"/>
+                    <TextBox x:Name="show_edit_episodes_textbox" Height="auto" Text="{Binding show.Episodes}" Grid.Column="1" Grid.Row="2"/>
+
+                    <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="3"/>
+                    <DatePicker x:Name="show_edit_release_date_picker" SelectedDateFormat="Long" SelectedDate="{Binding show.ReleaseDate}" Grid.Column="1" Grid.Row="3"/>
+
+                    <Label Content="Tags" Grid.Column="0" Grid.Row="4"/>
+                    <ListBox x:Name="tags_edit_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
+                                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                    </Border>
+                                    <!-- Image muss noch hinzugefuegt werden -->
+                                    <Button Content="X" Click="RemoveTagFromShow" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Label Content="Titelbild" Grid.Column="0" Grid.Row="6"/>
+                    <Grid Grid.Column="1" Grid.Row="6">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+
+                        <Image x:Name="show_edit_image_image" Source="{Binding show.Image}" Width="100" Height="100" Grid.Row="0"/>
+                        <Button Content="Bild öffnen" Grid.Row="1" Click="SelectNewImage"/>
+                    </Grid>
+                    <Button Content="Fertig" Grid.Row="7" Grid.Column="1" Click="UpdateShowDatabase" />
+                    <Button Content="Abbrechen"  Grid.Row="7" Grid.Column="0" Click="CancelEditShowToDatabase"/>
                 </Grid>
             </Border>
         </Popup>
