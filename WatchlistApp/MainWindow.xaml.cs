@@ -169,6 +169,7 @@ namespace WatchlistApp
         private void editShow(object sender, RoutedEventArgs e) => OpenEditShowPopup(sender, e);
         private void UpdateShowDatabase(object sender, RoutedEventArgs e) => UpdateEditedShow();
         private void RemoveTagFromShow(object sender, RoutedEventArgs e) => RemoveTag(sender, e);
+        private void AddTagToShow(object sender, RoutedEventArgs e) => AddTag(sender, e);
 
         private void SelectedFilterChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -484,6 +485,7 @@ namespace WatchlistApp
                     tags = new ObservableCollection<Tag>(showViewModel.tags)
                 };
                 editShowPopup.DataContext = _edit_showviewmodel;
+                all_tags_listbox.ItemsSource = tags;
             }
         }
 
@@ -595,7 +597,8 @@ namespace WatchlistApp
             _edit_showviewmodel.show.Description = show_edit_name_description_textbox.Text;
             _edit_showviewmodel.show.Episodes = long.Parse(show_edit_episodes_textbox.Text);
             _edit_showviewmodel.show.ReleaseDate = show_edit_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
-            _edit_showviewmodel.show.Image = _edit_imageBytes;
+            // Fuer den Fall, dass kein neues Bild ausgewaehlt wurde
+            _edit_showviewmodel.show.Image = _edit_imageBytes ?? _edit_showviewmodel.show.Image; 
             connection.Update(_edit_showviewmodel.show);
             CloseEditPopup();
         }
@@ -620,6 +623,32 @@ namespace WatchlistApp
                 
             }
         }
+
+        private void AddTag(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is Tag tag)
+            {
+                long shownr = _edit_showviewmodel.show.ShowNr;
+                long tagnr = tag.TagNr;
+                ShowTag st = connection.GetTable<ShowTag>()
+                    .FirstOrDefault(st => st.ShowNr == shownr && st.TagNr == tagnr);
+                if (st == null)
+                {
+                    _edit_showviewmodel.tags.Add(tag);
+                    ShowTag showTag = new ShowTag()
+                    {
+                        ShowNr = shownr,
+                        TagNr = tagnr
+                    };
+                    connection.Insert(showTag);
+                }
+                else
+                {
+                    ShowError("Show hat diesen Tag bereits");
+                }
+            }
+        }
+
 
         private void ClearTextBoxes()
         {

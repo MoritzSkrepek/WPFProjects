@@ -325,7 +325,7 @@
                     <DatePicker x:Name="show_edit_release_date_picker" SelectedDateFormat="Long" SelectedDate="{Binding show.ReleaseDate}" Grid.Column="1" Grid.Row="3"/>
 
                     <Label Content="Tags" Grid.Column="0" Grid.Row="4"/>
-                    <ListBox x:Name="tags_edit_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                    <ListBox x:Name="edit_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal"/>
@@ -339,6 +339,25 @@
                                     </Border>
                                     <!-- Image muss noch hinzugefuegt werden -->
                                     <Button Content="X" Click="RemoveTagFromShow" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <ListBox x:Name="all_tags_listbox" Grid.Column="1" Grid.Row="5" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
+                                        <TextBlock Text="{Binding Name}" Grid.Column="0"/>
+                                    </Border>
+                                    <!-- Image muss noch hinzugefuegt werden -->
+                                    <Button Content="+" Click="AddTagToShow" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
