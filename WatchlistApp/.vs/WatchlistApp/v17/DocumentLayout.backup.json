@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\showviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:showviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +38,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "ShowViewModel.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\ShowViewModel.cs",
               "RelativeDocumentMoniker": "ShowViewModel.cs",
@@ -46,12 +46,11 @@
               "RelativeToolTip": "ShowViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T13:35:12.327Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-16T13:35:12.327Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Show.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
               "RelativeDocumentMoniker": "Show.cs",
@@ -59,11 +58,12 @@
               "RelativeToolTip": "Show.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAwwFEAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-16T13:26:23.759Z"
+              "WhenOpened": "2024-10-16T13:26:23.759Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml",
               "RelativeDocumentMoniker": "MainWindow.xaml",
@@ -81,7 +81,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAG8CAAAAAAAAAADwv3sCAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAGkCAAAAAAAAAAA2wHICAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T14:31:15.34Z",
               "EditorCaption": ""

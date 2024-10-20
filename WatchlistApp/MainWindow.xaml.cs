@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Effects;
@@ -24,6 +25,8 @@ namespace WatchlistApp
         #region Properties
         private readonly WatchlistDatabaseDb connection;
         private Watchlist _selectedWatchlist;
+        private ShowViewModel _showViewModel_to_update;
+        private ObservableCollection<Tag> _showViewModel_tags_to_update;
         private string _title, _description, _releaseDate;
         private long _episodes, _stillReleasing, _alreadyWatched;
         private string _edit_title, _edit_description, _edit_releaseDate;
@@ -140,7 +143,7 @@ namespace WatchlistApp
             }
             else
             {
-                MessageBox.Show("[ERROR]: Fehler beim Löschen der Watchlist!");
+                ShowError("Fehler beim Löschen der Watchlist!");
             }
         }
 
@@ -152,7 +155,7 @@ namespace WatchlistApp
             }
             else
             {
-                MessageBox.Show("[ERROR]: Fehler beim Löschen der Show!");
+                ShowError("Fehler beim Löschen der Show!");
             }
         }
 
@@ -197,7 +200,7 @@ namespace WatchlistApp
 
             if (watchlist_listbox.SelectedItem is not Watchlist selectedWatchlist)
             {
-                MessageBox.Show("Bitte wählen Sie eine Watchlist aus.");
+                ShowError("Bitte wählen Sie eine Watchlist aus.");
                 return;
             }
 
@@ -468,25 +471,31 @@ namespace WatchlistApp
         {
             if (sender is Button button && button.DataContext is ShowViewModel showViewModel)
             {
-                _edit_showviewmodel = new ShowViewModel
-                {
-                    show = new Show
-                    {
-                        ShowNr = showViewModel.show.ShowNr,
-                        Name = showViewModel.show.Name,
-                        Image = showViewModel.show.Image,
-                        Description = showViewModel.show.Description,
-                        Episodes = showViewModel.show.Episodes,
-                        CurrentEpisode = showViewModel.show.CurrentEpisode,
-                        ReleaseDate = showViewModel.show.ReleaseDate,
-                        IsReleasing = showViewModel.show.IsReleasing,
-                        AlreadyWatched = showViewModel.show.AlreadyWatched,
-                    },
-                    tags = new ObservableCollection<Tag>(showViewModel.tags)
-                };
+                _showViewModel_to_update = showViewModel;
+                _edit_showviewmodel = CreateEditShowViewModel(showViewModel);
                 editShowPopup.DataContext = _edit_showviewmodel;
                 all_tags_listbox.ItemsSource = tags;
             }
+        }
+
+        private ShowViewModel CreateEditShowViewModel(ShowViewModel original)
+        {
+            return new ShowViewModel
+            {
+                show = new Show
+                {
+                    ShowNr = original.show.ShowNr,
+                    Name = original.show.Name,
+                    Image = original.show.Image,
+                    Description = original.show.Description,
+                    Episodes = original.show.Episodes,
+                    CurrentEpisode = original.show.CurrentEpisode,
+                    ReleaseDate = original.show.ReleaseDate,
+                    IsReleasing = original.show.IsReleasing,
+                    AlreadyWatched = original.show.AlreadyWatched,
+                },
+                tags = new ObservableCollection<Tag>(original.tags)
+            };
         }
 
         private Watchlist CreateNewWatchlist(string watchlistName)
@@ -593,14 +602,47 @@ namespace WatchlistApp
 
         private void UpdateEditedShow()
         {
-            _edit_showviewmodel.show.Name = show_edit_titel_textbox.Text;
-            _edit_showviewmodel.show.Description = show_edit_name_description_textbox.Text;
-            _edit_showviewmodel.show.Episodes = long.Parse(show_edit_episodes_textbox.Text);
-            _edit_showviewmodel.show.ReleaseDate = show_edit_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
-            // Fuer den Fall, dass kein neues Bild ausgewaehlt wurde
-            _edit_showviewmodel.show.Image = _edit_imageBytes ?? _edit_showviewmodel.show.Image; 
+            if (!ValidateInputs())
+            {
+                ShowError("Bitte alle Felder korrekt ausfüllen.");
+                return;
+            }
+
+            UpdateShowFromUI(_edit_showviewmodel);
             connection.Update(_edit_showviewmodel.show);
+
+            CopyProperties(_edit_showviewmodel, _showViewModel_to_update);
             CloseEditPopup();
+        }
+
+        private bool ValidateInputs()
+        {
+            if (string.IsNullOrWhiteSpace(show_edit_titel_textbox.Text) ||
+                string.IsNullOrWhiteSpace(show_edit_name_description_textbox.Text) ||
+                !long.TryParse(show_edit_episodes_textbox.Text, out _))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void UpdateShowFromUI(ShowViewModel viewModel)
+        {
+            viewModel.show.Name = show_edit_titel_textbox.Text;
+            viewModel.show.Description = show_edit_name_description_textbox.Text;
+            viewModel.show.Episodes = long.Parse(show_edit_episodes_textbox.Text);
+            viewModel.show.ReleaseDate = show_edit_release_date_picker.SelectedDate?.ToString("yyyy-MM-dd") ?? string.Empty;
+            viewModel.show.Image = _edit_imageBytes ?? viewModel.show.Image;
+        }
+
+        private void CopyProperties(ShowViewModel source, ShowViewModel target)
+        {
+            target.show.Name = source.show.Name;
+            target.show.Description = source.show.Description;
+            target.show.Episodes = source.show.Episodes;
+            target.show.ReleaseDate = source.show.ReleaseDate;
+            target.show.Image = source.show.Image;
+            target.tags = new ObservableCollection<Tag>(source.tags);
         }
 
         private void RemoveTag(object sender, RoutedEventArgs e)
