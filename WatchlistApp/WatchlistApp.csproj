@@ -9,7 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="resources\add_icon.png" />
+    <None Remove="resources\edit_icon.png" />
+    <None Remove="resources\greater-than_icon.png" />
+    <None Remove="resources\lesser-than_icon.png" />
+    <None Remove="resources\minus_icon.png" />
+    <None Remove="resources\plus_icon.png" />
     <None Remove="resources\remove_icon.png" />
     <None Remove="resources\trashbin_icon.png" />
   </ItemGroup>
@@ -26,7 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="resources\add_icon.png" />
+    <Resource Include="resources\edit_icon.png" />
+    <Resource Include="resources\minus_icon.png" />
+    <Resource Include="resources\plus_icon.png" />
     <Resource Include="resources\remove_icon.png" />
     <Resource Include="resources\trashbin_icon.png" />
   </ItemGroup>

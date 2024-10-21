@@ -26,7 +26,6 @@ namespace WatchlistApp
         private readonly WatchlistDatabaseDb connection;
         private Watchlist _selectedWatchlist;
         private ShowViewModel _showViewModel_to_update;
-        private ObservableCollection<Tag> _showViewModel_tags_to_update;
         private string _title, _description, _releaseDate;
         private long _episodes, _stillReleasing, _alreadyWatched;
         private string _edit_title, _edit_description, _edit_releaseDate;
@@ -608,11 +607,45 @@ namespace WatchlistApp
                 return;
             }
 
+            // Updaten der Show UI und DB
             UpdateShowFromUI(_edit_showviewmodel);
             connection.Update(_edit_showviewmodel.show);
 
+            // Updaten der Show UI (tags) und DB
+            UpdateTags();
+            
             CopyProperties(_edit_showviewmodel, _showViewModel_to_update);
             CloseEditPopup();
+        }
+
+        private void UpdateTags()
+        {
+            var originalTags = _showViewModel_to_update.tags.ToList();
+            var editedTags = _edit_showviewmodel.tags.ToList();
+
+            // Hinzugefügte Tags
+            var addedTags = editedTags.Except(originalTags).ToList();
+            foreach (var tag in addedTags)
+            {
+                ShowTag showTag = new ShowTag()
+                {
+                    ShowNr = _edit_showviewmodel.show.ShowNr,
+                    TagNr = tag.TagNr
+                };
+                connection.Insert(showTag);
+            }
+
+            // Geloeschte Tags entfernen
+            var removedTags = originalTags.Except(editedTags).ToList();
+            foreach (var tag in removedTags)
+            {
+                var showTag = connection.GetTable<ShowTag>()
+                    .FirstOrDefault(st => st.ShowNr == _edit_showviewmodel.show.ShowNr && st.TagNr == tag.TagNr);
+                if (showTag != null)
+                {
+                    connection.Delete(showTag);
+                }
+            }
         }
 
         private bool ValidateInputs()
@@ -650,19 +683,6 @@ namespace WatchlistApp
             if (sender is Button button && button.DataContext is Tag tag)
             {
                 _edit_showviewmodel.tags.Remove(tag);
-                long shownr = _edit_showviewmodel.show.ShowNr;
-                long tagnr = tag.TagNr;
-                var showtag = connection.GetTable<ShowTag>()
-                    .FirstOrDefault(st => st.ShowNr == shownr && st.TagNr == tagnr);
-                if (showtag != null)
-                {
-                    connection.Delete(showtag);
-                }
-                else
-                {
-                    ShowError("Fehler beim entfernen des Tags!");
-                }
-                
             }
         }
 
@@ -670,27 +690,16 @@ namespace WatchlistApp
         {
             if (sender is Button button && button.DataContext is Tag tag)
             {
-                long shownr = _edit_showviewmodel.show.ShowNr;
-                long tagnr = tag.TagNr;
-                ShowTag st = connection.GetTable<ShowTag>()
-                    .FirstOrDefault(st => st.ShowNr == shownr && st.TagNr == tagnr);
-                if (st == null)
+                if (!_edit_showviewmodel.tags.Contains(tag))
                 {
                     _edit_showviewmodel.tags.Add(tag);
-                    ShowTag showTag = new ShowTag()
-                    {
-                        ShowNr = shownr,
-                        TagNr = tagnr
-                    };
-                    connection.Insert(showTag);
                 }
                 else
                 {
-                    ShowError("Show hat diesen Tag bereits");
+                    ShowError("Show hat diesen Tag bereits.");
                 }
             }
         }
-
 
         private void ClearTextBoxes()
         {

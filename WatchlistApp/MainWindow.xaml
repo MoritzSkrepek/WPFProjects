@@ -73,7 +73,7 @@
                         <TextBlock Text="{Binding Name}" FontSize="16" Margin="5" VerticalAlignment="Center" />
                         <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" 
                                 HorizontalAlignment="Stretch" Click="AddShowToWatchlist">
-                            <Image Source="../resources/add_icon.png" Width="16" Height="16"/>
+                            <Image Source="../resources/plus_icon.png" Width="16" Height="16"/>
                         </Button>
                     </StackPanel>
                 </DataTemplate>
@@ -106,6 +106,7 @@
 
                             <Image Source="{Binding show.Image}" Stretch="UniformToFill" Height="200" Width="150" Grid.Row="0" 
                                    Grid.RowSpan="6" Grid.Column="0" Margin="5"/>
+                            
                             <TextBlock Text="{Binding show.Name}" FontSize="20" FontWeight="Bold" Grid.Row="0" Grid.Column="1" 
                                        VerticalAlignment="Center" TextWrapping="Wrap" Margin="5,5,5,5"/>
 
@@ -131,9 +132,13 @@
                                         <ColumnDefinition Width="Auto"/>
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Button Content="&lt;" Grid.Column="0" Click="CurrentEpisodeMinus" VerticalAlignment="Center"/>
+                                    <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="0" Click="CurrentEpisodeMinus" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/minus_icon.png" Width="16" Height="16"/>
+                                    </Button>
                                     <TextBlock x:Name="current_episode_textblock" Text="{Binding show.CurrentEpisode}" Width="auto" Grid.Column="1"/>
-                                    <Button Content="&gt;" Grid.Column="2" Click="CurrentEpisodePlus" VerticalAlignment="Center"/>
+                                    <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="CurrentEpisodePlus" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/plus_icon.png" Width="16" Height="16"/>
+                                    </Button>
                                 </Grid>
                             </Grid>
                             
@@ -197,10 +202,12 @@
                                     </CheckBox>
                                 </StackPanel>
                                 <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="RemoveShowFromWatchlist" RenderTransformOrigin="0.5,0.5">
-                                    <Image Source="../resources/remove_icon.png" Width="16" Height="16"/>
+                                    <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
                                 </Button>
                                 <!-- Style noch hinzufuegen -->
-                                <Button Content="x" Grid.Column="3" Click="editShow" Width="16" Height="16"/>
+                                <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="3" Click="editShow" RenderTransformOrigin="0.5,0.5">
+                                    <Image Source="../resources/edit_icon.png" Width="16" Height="16"/>
+                                </Button>
                             </Grid>
                         </Grid>
                     </Border>
@@ -337,8 +344,9 @@
                                     <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
                                         <TextBlock Text="{Binding Name}" Grid.Column="0"/>
                                     </Border>
-                                    <!-- Image muss noch hinzugefuegt werden -->
-                                    <Button Content="X" Click="RemoveTagFromShow" />
+                                    <Button Style="{StaticResource ImageButtonStyle}" Click="RemoveTagFromShow" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -356,8 +364,9 @@
                                     <Border BorderBrush="Gray" Margin="5" Width="auto" Height="auto">
                                         <TextBlock Text="{Binding Name}" Grid.Column="0"/>
                                     </Border>
-                                    <!-- Image muss noch hinzugefuegt werden -->
-                                    <Button Content="+" Click="AddTagToShow" />
+                                    <Button Style="{StaticResource ImageButtonStyle}" Click="AddTagToShow" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/plus_icon.png" Width="16" Height="16"/>
+                                    </Button>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
