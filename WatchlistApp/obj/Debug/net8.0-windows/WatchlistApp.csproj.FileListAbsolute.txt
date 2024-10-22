@@ -32,7 +32,6 @@ C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-window
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\MainWindow.g.cs
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\App.g.cs
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp_MarkupCompile.cache
-C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp_MarkupCompile.lref
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\MainWindow.baml
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp.g.resources
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp.GeneratedMSBuildEditorConfig.editorconfig
@@ -47,3 +46,4 @@ C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-window
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp.genruntimeconfig.cache
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\ref\WatchlistApp.dll
 C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\bin\Debug\net8.0-windows\WatchlistDatabase.db
+C:\Users\morit\Documents\GitHub\WPFProjects\WatchlistApp\obj\Debug\net8.0-windows\WatchlistApp_MarkupCompile.lref
