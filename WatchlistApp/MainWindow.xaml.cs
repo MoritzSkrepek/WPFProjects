@@ -164,6 +164,7 @@ namespace WatchlistApp
         private void AlreadyWatchedUnchecked(object sender, RoutedEventArgs e) => UpdateWatchedStatus(sender, e, false);
         private void CurrentEpisodePlus(object sender, RoutedEventArgs e) => UpdateCurrentEpisodeStatus(sender, e, 1);
         private void CurrentEpisodeMinus(object sender, RoutedEventArgs e) => UpdateCurrentEpisodeStatus(sender, e, -1);
+        private void CancelNewWatchlist(object sender, RoutedEventArgs e) => CloseNewWatchlistPopUp();
         private void TagsSelectionChanged(object sender, SelectionChangedEventArgs e) => UpdateSelectedTags();
         private void CancelAddShowToDatabase(object sender, RoutedEventArgs e) => CloseNewShowPopUp();
         private void CancelEditShowToDatabase(object sender, RoutedEventArgs e) => CloseEditPopup();
@@ -623,7 +624,7 @@ namespace WatchlistApp
             var originalTags = _showViewModel_to_update.tags.ToList();
             var editedTags = _edit_showviewmodel.tags.ToList();
 
-            // Hinzugefügte Tags
+            // Hinzugefügte Tags hinzufuegen
             var addedTags = editedTags.Except(originalTags).ToList();
             foreach (var tag in addedTags)
             {

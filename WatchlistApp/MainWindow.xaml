@@ -66,35 +66,13 @@
             </Style.Triggers>
         </Style>
 
-        <!-- TextBox Style -->
-        <Style TargetType="{x:Type TextBox}">
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Margin" Value="5,0,5,0"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#CCCCCC"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border 
-                    Background="{TemplateBinding Background}" 
-                    BorderBrush="{TemplateBinding BorderBrush}" 
-                    BorderThickness="{TemplateBinding BorderThickness}"
-                    CornerRadius="8" Padding="{TemplateBinding Padding}">
-                            <ScrollViewer x:Name="PART_ContentHost"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <!-- Popup Container Style -->
         <Style TargetType="{x:Type Popup}">
             <Setter Property="AllowsTransparency" Value="True"/>
             <Setter Property="PopupAnimation" Value="Fade"/>
         </Style>
 
+        <!-- Style um ListBoxen gerundet zu stylen -->
         <Style TargetType="{x:Type ListBox}" x:Key="RoundedListBoxStyle">
             <Setter Property="BorderBrush" Value="#DDDDDD"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -118,6 +96,7 @@
             </Setter>
         </Style>
 
+        <!-- Style fuer Show Card -->
         <Style TargetType="{x:Type ListBoxItem}" x:Key="ListBoxItemStyle">
             <Setter Property="Margin" Value="5"/>
             <Setter Property="Padding" Value="20"/>
@@ -138,6 +117,7 @@
             </Setter>
         </Style>
 
+        <!-- Style fuer DatePicker -->
         <Style TargetType="{x:Type DatePicker}" x:Key="ModernDatePickerStyle">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="5"/>
@@ -147,6 +127,57 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Border.CornerRadius" Value="5"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Style fuer Label -->
+        <Style TargetType="{x:Type Label}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Foreground" Value="#333333"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+
+        <!-- Style für die TextBox mit Watermark und Border -->
+        <Style TargetType="{x:Type TextBox}" x:Key="WatermarkTextBoxStyle">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Margin" Value="5,0,5,0"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border 
+                    Background="{TemplateBinding Background}" 
+                    BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="{TemplateBinding BorderThickness}" 
+                    CornerRadius="8" 
+                    Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                                <TextBlock x:Name="WatermarkTextBlock"
+                                   Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(local:WatermarkService.Watermark)}"
+                                   Foreground="Gray"
+                                   Margin="5,0,0,0"
+                                   VerticalAlignment="Center"
+                                   IsHitTestVisible="False"
+                                   Visibility="Hidden"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="WatermarkTextBlock" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
     
@@ -183,7 +214,8 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
                 </Expander>
-                <TextBox x:Name="search_text_box" Width="200" TextChanged="SearchShow" />
+                <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Show suchen" x:Name="search_text_box" 
+                    VerticalAlignment="Center" Width="200" TextChanged="SearchShow"/>
                 <Button Style="{StaticResource PrimaryButtonStyle}" Content="Suchen" Click="SearchClicked" Cursor="Hand"/>
             </WrapPanel>
         </Grid>
@@ -344,7 +376,9 @@
         <Popup x:Name="addWatchlistPopup" Placement="Center" IsOpen="False" StaysOpen="False">
             <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="15" CornerRadius="10">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="new_watchlist_field" Width="200" Margin="0,0,10,0"/>
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Watchlist Titel" VerticalAlignment="Center" 
+                        x:Name="new_watchlist_field" Width="200" Margin="0,0,10,0"/>
+                    <Button Content="Abbrechen" Style="{StaticResource CancelButtonStyle}" Click="CancelNewWatchlist" />
                     <Button Content="Hinzufügen" Style="{StaticResource PrimaryButtonStyle}" Click="AddWatchlistToDatabase"/>
                 </StackPanel>
             </Border>
@@ -355,7 +389,6 @@
             <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="15" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -370,28 +403,29 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Label Content="Show Titel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="show_titel_textbox" Grid.Column="1" Grid.Row="0" Margin="0,5"/>
+                    <Label Content="Show hinzufügen" FontSize="30" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <Label Content="Beschreibung" Grid.Column="0" Grid.Row="1" VerticalAlignment="Top"/>
-                    <TextBox x:Name="show_name_description_textbox" AcceptsReturn="True" Grid.Column="1" Grid.Row="1" Margin="0,5"/>
-                    
-                    <Label Content="Episoden" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center"/>
-                    <TextBox x:Name="show_episodes_textbox" Grid.Column="1" Grid.Row="2" Margin="0,5"/>
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Titel" VerticalAlignment="Center" 
+                        x:Name="show_titel_textbox" Grid.Column="1" Grid.Row="1" Margin="0,5"/>
 
-                    <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center"/>
-                    <DatePicker Style="{StaticResource ModernDatePickerStyle}" x:Name="show_release_date_picker" SelectedDateFormat="Long" 
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Beschreibung" x:Name="show_name_description_textbox" 
+                        AcceptsReturn="True" Grid.Column="1" Grid.Row="2" Margin="0,5"/>
+
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Episoden" x:Name="show_episodes_textbox" 
                         Grid.Column="1" Grid.Row="3" Margin="0,5"/>
 
-                    <Label Content="Wird noch veröffentlicht" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center"/>
-                    <CheckBox x:Name="show_still_releasing_checkbox" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" Margin="0,5"/>
+                    <DatePicker Style="{StaticResource ModernDatePickerStyle}" x:Name="show_release_date_picker" SelectedDateFormat="Long" 
+                        Grid.Column="1" Grid.Row="4" Margin="0,5"/>
 
-                    <Label Content="Bereits gesehen" Grid.Column="0" Grid.Row="5" VerticalAlignment="Center"/>
-                    <CheckBox x:Name="show_already_watched_checkbox" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" Margin="0,5"/>
+                    <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Label Content="Wird noch veröffentlicht" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="show_still_releasing_checkbox" VerticalAlignment="Center" Margin="0,5"/>
+                        <Label Content="Bereits gesehen" VerticalAlignment="Center"/>
+                        <CheckBox x:Name="show_already_watched_checkbox" VerticalAlignment="Center" Margin="0,5"/>
+                    </StackPanel>
 
-                    <Label Content="Tags" Grid.Column="0" Grid.Row="6" VerticalAlignment="Top"/>
                     <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" 
-                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="6" SelectionMode="Multiple" Margin="0,5">
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="6" SelectionMode="Multiple" Margin="0,5" SelectionChanged="TagsSelectionChanged">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal"/>
@@ -406,9 +440,9 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Label Content="Titelbild" Grid.Column="0" Grid.Row="7"/>
-                    <Grid Grid.Column="1" Grid.Row="7">
+                    <Grid Grid.Row="7">
                         <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
@@ -416,8 +450,16 @@
                         <Image x:Name="show_image_image" Source="{Binding ShowImage}" Width="100" Height="100" Grid.Row="0"/>
                         <Button Style="{StaticResource PrimaryButtonStyle}" Content="Bild öffnen" Click="SelectImage" Grid.Row="1"/>
                     </Grid>
-                    <Button Style="{StaticResource PrimaryButtonStyle}" Content="Show hinzufügen" Click="AddShowToDatabase" Grid.Row="8" Grid.Column="1" Margin="0,5"/>
-                    <Button Style="{StaticResource CancelButtonStyle}" Content="Abbrechen" Click="CancelAddShowToDatabase" Grid.Row="8" Grid.Column="0" Margin="0,5"/>
+                    <Grid Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource CancelButtonStyle}" Content="Abbrechen" Click="CancelAddShowToDatabase" 
+                            Grid.Column="0" HorizontalAlignment="Stretch"/>
+                        <Button Style="{StaticResource PrimaryButtonStyle}" Content="Show hinzufügen" Click="AddShowToDatabase" 
+                            Grid.Column="1" HorizontalAlignment="Stretch"/>
+                    </Grid>
                 </Grid>
             </Border>
         </Popup>
@@ -427,7 +469,6 @@
             <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="15" CornerRadius="10">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -439,25 +480,24 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <Label Content="Show Titel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center"/>
-                    <TextBox x:Name="show_edit_titel_textbox" Text="{Binding show.Name}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="0" Margin="0,5"/>
+                    <Label Content="Show bearbeiten" FontSize="30" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-                    <Label Content="Beschreibung" Grid.Column="0" Grid.Row="1"/>
-                    <TextBox x:Name="show_edit_name_description_textbox" Text="{Binding show.Description}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"
-                        TextWrapping="Wrap" Height="auto" Grid.Column="1" Grid.Row="1" Margin="0,5"/>
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Titel" x:Name="show_edit_titel_textbox" 
+                        Text="{Binding show.Name}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="1" Margin="0,5"/>
 
-                    <Label Content="Episoden" Grid.Column="0" Grid.Row="2"/>
-                    <TextBox x:Name="show_edit_episodes_textbox" Height="auto" Text="{Binding show.Episodes}" Grid.Column="1" Grid.Row="2" Margin="0,5"/>
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Beschreibung" x:Name="show_edit_name_description_textbox" 
+                        Text="{Binding show.Description}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="2" Margin="0,5"/>
 
-                    <Label Content="Erscheinungsdatum" Grid.Column="0" Grid.Row="3"/>
+                    <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Episoden" x:Name="show_edit_episodes_textbox" 
+                        Height="auto" Text="{Binding show.Episodes}" Grid.Row="3" Margin="0,5"/>
+
                     <DatePicker Style="{StaticResource ModernDatePickerStyle}" x:Name="show_edit_release_date_picker" SelectedDateFormat="Long" 
-                        SelectedDate="{Binding show.ReleaseDate}" Grid.Column="1" Grid.Row="3" Margin="0,5"/>
+                        SelectedDate="{Binding show.ReleaseDate}" Grid.Row="4" Margin="0,5"/>
 
-                    <Label Content="Tags" Grid.Column="0" Grid.Row="4"/>
-                    <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="edit_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" 
+                    <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="edit_tags_listbox" ItemsSource="{Binding tags}" Grid.Row="5" 
                         ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,5">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -478,7 +518,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="all_tags_listbox" Grid.Column="1" Grid.Row="5" 
+                    <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="all_tags_listbox" Grid.Row="6" 
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,5">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -499,8 +539,7 @@
                         </ListBox.ItemTemplate>
                     </ListBox>
 
-                    <Label Content="Titelbild" Grid.Column="0" Grid.Row="6"/>
-                    <Grid Grid.Column="1" Grid.Row="6">
+                    <Grid Grid.Row="7">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
@@ -509,8 +548,14 @@
                         <Image x:Name="show_edit_image_image" Source="{Binding show.Image}" Width="100" Height="100" Grid.Row="0"/>
                         <Button Style="{StaticResource PrimaryButtonStyle}" Content="Bild öffnen" Grid.Row="1" Click="SelectNewImage"/>
                     </Grid>
-                    <Button Style="{StaticResource PrimaryButtonStyle}" Content="Fertig" Grid.Row="7" Grid.Column="1" Click="UpdateShowDatabase" Margin="0,5"/>
-                    <Button Style="{StaticResource CancelButtonStyle}" Content="Abbrechen"  Grid.Row="7" Grid.Column="0" Click="CancelEditShowToDatabase" Margin="0,5"/>
+                    <Grid Grid.Row="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource CancelButtonStyle}" Content="Abbrechen"  Grid.Row="7" Grid.Column="0" Click="CancelEditShowToDatabase"/>
+                        <Button Style="{StaticResource PrimaryButtonStyle}" Content="Fertig" Grid.Row="7" Grid.Column="1" Click="UpdateShowDatabase"/>
+                    </Grid>
                 </Grid>
             </Border>
         </Popup>
