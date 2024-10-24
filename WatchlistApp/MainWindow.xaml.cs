@@ -617,7 +617,7 @@ namespace WatchlistApp
 
         private void UpdateEditedShow()
         {
-            if (!ValidateInputs())
+            if (ValidateInputs())
             {
                 ShowError("Bitte alle Felder korrekt ausfüllen.");
                 return;
@@ -672,9 +672,9 @@ namespace WatchlistApp
                 show_edit_release_date_picker.SelectedDate == null ||
                 edit_tags_listbox.Items.Count == 0)
             {
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
 
         private void UpdateShowFromUI(ShowViewModel viewModel)
