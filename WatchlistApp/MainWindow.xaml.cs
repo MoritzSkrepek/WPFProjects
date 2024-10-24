@@ -119,6 +119,10 @@ namespace WatchlistApp
                 if (!string.IsNullOrWhiteSpace(search_text_box.Text))
                 {
                     shows = shows.Where(show => show.Name.Contains(search_text_box.Text)).ToList();
+                    if (!shows.Any())
+                    {
+                        ShowError("Keine Serien gefunden");
+                    }
                 }
 
                 AddShowsToViewModel(shows);
@@ -192,28 +196,37 @@ namespace WatchlistApp
 
         private void SearchClicked(object sender, RoutedEventArgs e)
         {
+            if (watchlist_listbox.SelectedItem is not Watchlist selectedWatchlist)
+            {
+                ShowError("Bitte Watchlist auswählen");
+                return;
+            }
+
             if (filters.Count == 0)
             {
+                ShowError("Bitte Filter auswählen");
                 WatchlistSelectionChanged(null, null);
                 return;
             }
 
-            if (watchlist_listbox.SelectedItem is not Watchlist selectedWatchlist)
-            {
-                ShowError("Bitte wählen Sie eine Watchlist aus.");
-                return;
-            }
-
             var matchedShows = GetFilteredShows(selectedWatchlist);
-            show_view_models.Clear();
-            AddShowsToViewModel(matchedShows);
+            if (matchedShows.Any())
+            {
+                show_view_models.Clear();
+                AddShowsToViewModel(matchedShows);
+            }
+            else
+            {
+                show_view_models.Clear();
+                ShowError("Keine Serien mit angegebenen Filtern gefunden");
+            }
         }
 
         private void AddWatchlistToDatabase(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(new_watchlist_field.Text))
             {
-                ShowError("Bitte füllen Sie das Namensfeld aus");
+                ShowError("Bitte Namensfeld ausfüllen");
                 return;
             }
             var newWatchlist = CreateNewWatchlist(new_watchlist_field.Text);
@@ -223,9 +236,9 @@ namespace WatchlistApp
 
         private void AddShowToDatabase(object sender, RoutedEventArgs e)
         {
-            SetVariables();
             if (ValidateInput())
             {
+                SetVariables();
                 var insertedShow = InsertShow();
                 if (insertedShow != null)
                 {
@@ -237,7 +250,7 @@ namespace WatchlistApp
             }
             else
             {
-                ShowError("Bitte füllen Sie alle Felder aus und wählen Sie ein Bild aus!");
+                ShowError("Bitte alle Felder ausfüllen");
             }
         }
 
@@ -539,10 +552,12 @@ namespace WatchlistApp
 
         private bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(_title) &&
-                   !string.IsNullOrEmpty(_description) &&
-                   !string.IsNullOrEmpty(_releaseDate) &&
-                   _imageBytes != null;
+            return show_titel_textbox.Text != string.Empty &&
+                show_name_description_textbox.Text != string.Empty &&
+                show_episodes_textbox.Text != string.Empty &&
+                show_release_date_picker.SelectedDate != null &&
+                _selectedTags.Any() &&
+                show_image_image.Source != null;
         }
 
         private Show InsertShow()
@@ -653,7 +668,9 @@ namespace WatchlistApp
         {
             if (string.IsNullOrWhiteSpace(show_edit_titel_textbox.Text) ||
                 string.IsNullOrWhiteSpace(show_edit_name_description_textbox.Text) ||
-                !long.TryParse(show_edit_episodes_textbox.Text, out _))
+                string.IsNullOrWhiteSpace(show_edit_episodes_textbox.Text) ||
+                show_edit_release_date_picker.SelectedDate == null ||
+                edit_tags_listbox.Items.Count == 0)
             {
                 return false;
             }
@@ -691,13 +708,13 @@ namespace WatchlistApp
         {
             if (sender is Button button && button.DataContext is Tag tag)
             {
-                if (!_edit_showviewmodel.tags.Contains(tag))
+                if (!_edit_showviewmodel.tags.Any(t => t.Name == tag.Name))
                 {
                     _edit_showviewmodel.tags.Add(tag);
                 }
                 else
                 {
-                    ShowError("Show hat diesen Tag bereits.");
+                    ShowError("Serie hat diesen Tag bereits.");
                 }
             }
         }
@@ -715,9 +732,14 @@ namespace WatchlistApp
             tags_listbox.SelectedItems.Clear();
         }
 
-        private void ShowError(string message)
+        private async void ShowError(string message)
         {
-            MessageBox.Show($"[ERROR]: {message}");
+            snackbarMessage.Text = message;
+            errorSnackbar.Effect = null;
+            errorSnackbar.Visibility = Visibility.Visible;
+            // Snackbar für 3 Sekunden anzeigen
+            await Task.Delay(3000);
+            errorSnackbar.Visibility = Visibility.Collapsed;
         }
 
         protected virtual void OnPropertyChanged(string property_name) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property_name));
