@@ -11,12 +11,12 @@
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\watermarkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:watermarkservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|solutionrelative:show.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C0E6510F-43D9-4CA4-B0A9-D1A2705725BB}|WatchlistApp.csproj|c:\\users\\morit\\documents\\github\\wpfprojects\\watchlistapp\\showviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,7 +42,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "WatermarkService.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\WatermarkService.cs",
               "RelativeDocumentMoniker": "WatermarkService.cs",
@@ -50,7 +50,8 @@
               "RelativeToolTip": "WatermarkService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-23T13:29:41.49Z"
+              "WhenOpened": "2024-10-23T13:29:41.49Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -66,7 +67,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Show.cs",
               "DocumentMoniker": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\Show.cs",
               "RelativeDocumentMoniker": "Show.cs",
@@ -84,7 +85,7 @@
               "RelativeDocumentMoniker": "MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml.cs",
               "RelativeToolTip": "MainWindow.xaml.cs",
-              "ViewState": "AgIAAH8CAAAAAAAAAADgv2sCAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAAoBAAAAAAAAAAAuwCMBAAAzAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-14T14:31:15.34Z",
               "EditorCaption": ""
@@ -98,7 +99,8 @@
               "ToolTip": "C:\\Users\\morit\\Documents\\GitHub\\WPFProjects\\WatchlistApp\\MainWindow.xaml",
               "RelativeToolTip": "MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-10-14T14:36:56.563Z"
+              "WhenOpened": "2024-10-14T14:36:56.563Z",
+              "EditorCaption": ""
             }
           ]
         }

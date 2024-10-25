@@ -8,7 +8,7 @@
         ResizeMode="CanResizeWithGrip"
         MinHeight="400"
         MinWidth="670"
-        Title="MainWindow">
+        Title="MainWindow" SizeChanged="WindowSizeChanged">
     <Window.Resources>
         <!-- Style for Buttons with Images -->
         <Style TargetType="{x:Type Button}" x:Key="ImageButtonStyle">
@@ -97,21 +97,37 @@
         </Style>
 
         <!-- Style fuer Show Card -->
-        <Style TargetType="{x:Type ListBoxItem}" x:Key="ListBoxItemStyle">
+        <Style TargetType="{x:Type ListBoxItem}" x:Key="ModernListBoxItemStyle">
             <Setter Property="Margin" Value="5"/>
-            <Setter Property="Padding" Value="20"/>
-            <Setter Property="BorderBrush" Value="Gray"/>
+            <Setter Property="Padding" Value="15"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ListBoxItem">
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" 
-                        BorderThickness="{TemplateBinding BorderThickness}" 
-                        Background="{TemplateBinding Background}" 
-                        CornerRadius="15">
-                            <ContentPresenter/>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="10"
+                            SnapsToDevicePixels="True">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Black" BlurRadius="8" ShadowDepth="2" Opacity="0.2"/>
+                            </Border.Effect>
+                            <Grid>
+                                <ContentPresenter Margin="10,5"/>
+                            </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F5F5F5"/>
+                                <Setter Property="BorderBrush" Value="#D0D0D0"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#DDEFFF"/>
+                                <Setter Property="BorderBrush" Value="#A0C4FF"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -179,10 +195,123 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style TargetType="{x:Type ScrollViewer}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!-- Content Presenter -->
+                            <ScrollContentPresenter Grid.Column="0" Grid.Row="0" />
+                            <!-- Vertical ScrollBar -->
+                            <ScrollBar Name="PART_VerticalScrollBar" 
+                                Grid.Column="1" 
+                                Grid.Row="0" 
+                                Orientation="Vertical" 
+                                Background="Transparent" 
+                                Width="8"
+                                Margin="0"
+                                Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                Minimum="0"
+                                Maximum="{TemplateBinding ScrollableHeight}"
+                                ViewportSize="{TemplateBinding ViewportHeight}"
+                                Value="{TemplateBinding VerticalOffset}">
+                                <ScrollBar.Style>
+                                    <Style TargetType="ScrollBar">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ScrollBar">
+                                                    <Grid Background="{TemplateBinding Background}">
+                                                        <Track Name="PART_Track">
+                                                            <Track.DecreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.LineUpCommand" Style="{x:Null}" Height="0"/>
+                                                            </Track.DecreaseRepeatButton>
+                                                            <Track.Thumb>
+                                                                <Thumb Background="Gray" Width="8">
+                                                                    <Thumb.Template>
+                                                                        <ControlTemplate TargetType="Thumb">
+                                                                            <Border Background="{TemplateBinding Background}" 
+                                                                            Width="{TemplateBinding Width}" 
+                                                                            Height="20" 
+                                                                            CornerRadius="4" />
+                                                                        </ControlTemplate>
+                                                                    </Thumb.Template>
+                                                                </Thumb>
+                                                            </Track.Thumb>
+                                                            <Track.IncreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.LineDownCommand" Style="{x:Null}" Height="0"/>
+                                                            </Track.IncreaseRepeatButton>
+                                                        </Track>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ScrollBar.Style>
+                            </ScrollBar>
+                            <!-- Horizontal ScrollBar -->
+                            <ScrollBar Name="PART_HorizontalScrollBar"
+                                Grid.Column="0" 
+                                Grid.Row="1" 
+                                Orientation="Horizontal" 
+                                Background="Transparent" 
+                                Height="8" 
+                                Margin="0"
+                                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" 
+                                Minimum="0"
+                                Maximum="{TemplateBinding ScrollableWidth}"
+                                ViewportSize="{TemplateBinding ViewportWidth}"
+                                Value="{TemplateBinding HorizontalOffset}">
+                                <ScrollBar.Style>
+                                    <Style TargetType="ScrollBar">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ScrollBar">
+                                                    <Grid Background="{TemplateBinding Background}">
+                                                        <Track Name="PART_Track">
+                                                            <Track.DecreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.LineLeftCommand" Style="{x:Null}" Width="0"/>
+                                                            </Track.DecreaseRepeatButton>
+                                                            <Track.Thumb>
+                                                                <Thumb Background="Gray" Height="8">
+                                                                    <Thumb.Template>
+                                                                        <ControlTemplate TargetType="Thumb">
+                                                                            <Border Background="{TemplateBinding Background}" 
+                                                                            Width="20" 
+                                                                            Height="{TemplateBinding Height}" 
+                                                                            CornerRadius="4" />
+                                                                        </ControlTemplate>
+                                                                    </Thumb.Template>
+                                                                </Thumb>
+                                                            </Track.Thumb>
+                                                            <Track.IncreaseRepeatButton>
+                                                                <RepeatButton Command="ScrollBar.LineRightCommand" Style="{x:Null}" Width="0"/>
+                                                            </Track.IncreaseRepeatButton>
+                                                        </Track>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ScrollBar.Style>
+                            </ScrollBar>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid>
-        <Grid x:Name="main_content">
+        <Grid x:Name="main_content" Cursor="">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" MinWidth="150"/>
                 <ColumnDefinition Width="*" MinWidth="300"/>
@@ -195,9 +324,9 @@
             <!-- Neue Watchlist, Filter, Searchbar -->
             <Button Style="{StaticResource PrimaryButtonStyle}" Content="Neue Watchlist" Grid.Row="0" Grid.Column="0" Click="AddWatchlist" Cursor="Hand"/>
             <WrapPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
-                <Expander Header="Filter" Margin="5">
-                    <ListBox x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged">
+                <Expander x:Name="filter_expander" Margin="5">
+                    <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="filter_listbox" ItemsSource="{Binding tags}" SelectionMode="Multiple" 
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="SelectedFilterChanged" Cursor="">
                         <ListBox.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Orientation="Horizontal" />
@@ -216,7 +345,7 @@
             </WrapPanel>
 
             <!-- Listbox fuer Watchlists -->
-            <ListBox ItemContainerStyle="{StaticResource ListBoxItemStyle}" x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" 
+            <ListBox ItemContainerStyle="{StaticResource ModernListBoxItemStyle}" x:Name="watchlist_listbox" ItemsSource="{Binding watchlists}" Grid.Column="0" Grid.Row="1" 
                      SelectionChanged="WatchlistSelectionChanged">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -224,18 +353,18 @@
                             <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" Click="DeleteWatchlist">
                                 <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
                             </Button>
-                            <TextBlock Text="{Binding Name}" FontSize="16" Margin="5" VerticalAlignment="Center" />
-                            <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" 
-                                    HorizontalAlignment="Stretch" Click="AddShowToWatchlist">
+                            <Button Style="{StaticResource ImageButtonStyle}" VerticalAlignment="Center" Click="AddShowToWatchlist">
                                 <Image Source="../resources/plus_icon.png" Width="16" Height="16"/>
                             </Button>
+                            <TextBlock Text="{Binding Name}" FontSize="16" Margin="5" VerticalAlignment="Center" />
+                            
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
 
             <!-- ListBox fuer Shows -->
-            <ListBox ItemContainerStyle="{StaticResource ListBoxItemStyle}" x:Name="shows_listbox" ItemsSource="{Binding show_view_models}" Grid.Column="1" Grid.Row="1" 
+            <ListBox ItemContainerStyle="{StaticResource ModernListBoxItemStyle}" x:Name="shows_listbox" ItemsSource="{Binding show_view_models}" Grid.Column="1" Grid.Row="1" 
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
@@ -268,36 +397,35 @@
                                 <TextBlock Text="{Binding show.Description}" FontSize="14" TextWrapping="Wrap"/>
                             </ScrollViewer>
 
-                            <TextBlock Text="{Binding show.ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12" 
+                            <TextBlock Text="{Binding show.ReleaseDate, StringFormat='Release Date: {0:yyyy-MM-dd}'}" FontSize="12"
                                            Grid.Row="2" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,5,0"/>
 
-                            <Grid Grid.Row="3" Grid.Column="1" Margin="5,5,5,0">
+                            <Grid Grid.Row="3" Grid.Column="1" Margin="5,0,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="0">
+                                    <TextBlock FontSize="12">
                                         <Run Text="{Binding show.Episodes}" />
-                                        <Run Text="Episoden" />
-                                </TextBlock>
-                                <Grid Grid.Column="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="0" Click="CurrentEpisodeMinus" RenderTransformOrigin="0.5,0.5">
-                                        <Image Source="../resources/minus_icon.png" Width="16" Height="16"/>
+                                        <Run Text="Episoden"/>
+                                    </TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1">
+                                    <TextBlock Text="Aktuelle Episode" VerticalAlignment="Center" FontSize="12"/>
+                                    <Button Style="{StaticResource ImageButtonStyle}" Click="CurrentEpisodeMinus" Width="30" Height="30" Margin="5,0">
+                                        <Image Source="../resources/minus_icon.png" Width="16" Height="16" />
                                     </Button>
-                                    <TextBlock x:Name="current_episode_textblock" Text="{Binding show.CurrentEpisode}" Width="auto" Grid.Column="1"/>
-                                    <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="CurrentEpisodePlus" RenderTransformOrigin="0.5,0.5">
-                                        <Image Source="../resources/plus_icon.png" Width="16" Height="16"/>
+                                    <TextBlock x:Name="current_episode_textblock" Text="{Binding show.CurrentEpisode}" FontSize="12" FontWeight="Bold" 
+                                        VerticalAlignment="Center" Width="40" TextAlignment="Center"/>
+                                    <Button Style="{StaticResource ImageButtonStyle}" Click="CurrentEpisodePlus" Width="30" Height="30" Margin="5,0">
+                                        <Image Source="../resources/plus_icon.png" Width="16" Height="16" />
                                     </Button>
-                                </Grid>
+                                </StackPanel>
                             </Grid>
 
                             <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="show_tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" Grid.Row="4" 
-                                     SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,5,5,5">
+                                     SelectionMode="Multiple" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="5,0,5,5">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <WrapPanel Orientation="Horizontal"/>
@@ -312,55 +440,58 @@
                                 </ListBox.ItemTemplate>
                             </ListBox>
 
-                            <Grid Grid.Row="5" Grid.Column="1" Margin="5,0,5,5" >
+                            <Grid Grid.Row="5" Grid.Column="1" Margin="5,0,5,0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <StackPanel Orientation="Horizontal" Grid.Column="0">
-                                    <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                    <CheckBox VerticalAlignment="Center" Checked="IsReleasingChecked" Unchecked="IsReleasingUnchecked">
-                                        <CheckBox.Style>
-                                            <Style TargetType="CheckBox">
-                                                <Setter Property="IsChecked" Value="False" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding show.IsReleasing}" Value="1">
-                                                        <Setter Property="IsChecked" Value="True" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding show.IsReleasing}" Value="0">
-                                                        <Setter Property="IsChecked" Value="False" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </CheckBox.Style>
-                                    </CheckBox>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0" VerticalAlignment="Center">
+                                    <StackPanel Orientation="Horizontal" Margin="0,0,15,0">
+                                        <TextBlock Text="Wird noch veröffentlicht" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <CheckBox VerticalAlignment="Center" Checked="IsReleasingChecked" Unchecked="IsReleasingUnchecked" Margin="2.5,0,0,0">
+                                            <CheckBox.Style>
+                                                <Style TargetType="CheckBox">
+                                                    <Setter Property="IsChecked" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding show.IsReleasing}" Value="1">
+                                                            <Setter Property="IsChecked" Value="True" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding show.IsReleasing}" Value="0">
+                                                            <Setter Property="IsChecked" Value="False" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Gesehen" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
+                                        <CheckBox VerticalAlignment="Center" Checked="AlreadyWatchedChecked" Unchecked="AlreadyWatchedUnchecked" Margin="2.5,0,0,0">
+                                            <CheckBox.Style>
+                                                <Style TargetType="CheckBox">
+                                                    <Setter Property="IsChecked" Value="False" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="1">
+                                                            <Setter Property="IsChecked" Value="True" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="0">
+                                                            <Setter Property="IsChecked" Value="False" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </StackPanel>
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal" Grid.Column="1">
-                                    <TextBlock Text="Bereits angeschaut" FontSize="12" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                                    <CheckBox VerticalAlignment="Center" Checked="AlreadyWatchedChecked" Unchecked="AlreadyWatchedUnchecked">
-                                        <CheckBox.Style>
-                                            <Style TargetType="CheckBox">
-                                                <Setter Property="IsChecked" Value="False" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="1">
-                                                        <Setter Property="IsChecked" Value="True" />
-                                                    </DataTrigger>
-                                                    <DataTrigger Binding="{Binding show.AlreadyWatched}" Value="0">
-                                                        <Setter Property="IsChecked" Value="False" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </CheckBox.Style>
-                                    </CheckBox>
+                                <StackPanel Orientation="Horizontal" Grid.Column="1" HorizontalAlignment="Right">
+                                    <Button Style="{StaticResource ImageButtonStyle}" Width="30" Height="30" Margin="4,0,0,0" Click="RemoveShowFromWatchlist" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
+                                    </Button>
+                                    <Button Style="{StaticResource ImageButtonStyle}" Width="30" Height="30" Margin="6,0,0,0" Click="editShow" RenderTransformOrigin="0.5,0.5">
+                                        <Image Source="../resources/edit_icon.png" Width="16" Height="16"/>
+                                    </Button>
                                 </StackPanel>
-                                <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="2" Click="RemoveShowFromWatchlist" RenderTransformOrigin="0.5,0.5">
-                                    <Image Source="../resources/trashbin_icon.png" Width="16" Height="16"/>
-                                </Button>
-                                <Button Style="{StaticResource ImageButtonStyle}" Grid.Column="3" Click="editShow" RenderTransformOrigin="0.5,0.5">
-                                    <Image Source="../resources/edit_icon.png" Width="16" Height="16"/>
-                                </Button>
                             </Grid>
                         </Grid>
                     </DataTemplate>
@@ -396,24 +527,21 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Content="Show hinzufügen" FontSize="30" FontWeight="Bold" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Titel" VerticalAlignment="Center" 
-                            x:Name="show_titel_textbox" Grid.Column="1" Grid.Row="1" Margin="0,5"/>
+                            x:Name="show_titel_textbox" Grid.Column="1" Grid.Row="0" Margin="0,5"/>
 
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Beschreibung" x:Name="show_name_description_textbox" 
-                            AcceptsReturn="True" Grid.Column="1" Grid.Row="2" Margin="0,5"/>
+                            AcceptsReturn="True" Grid.Column="1" Grid.Row="1" Margin="0,5"/>
 
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Episoden" x:Name="show_episodes_textbox" 
-                            Grid.Column="1" Grid.Row="3" Margin="0,5"/>
+                            Grid.Column="1" Grid.Row="2" Margin="0,5"/>
 
                         <DatePicker Style="{StaticResource ModernDatePickerStyle}" x:Name="show_release_date_picker" SelectedDateFormat="Long" 
-                            Grid.Column="1" Grid.Row="4" Margin="0,5"/>
+                            Grid.Column="1" Grid.Row="3" Margin="0,5"/>
 
-                        <StackPanel Orientation="Horizontal" Grid.Row="5" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <Label Content="Wird noch veröffentlicht" VerticalAlignment="Center"/>
                             <CheckBox x:Name="show_still_releasing_checkbox" VerticalAlignment="Center" Margin="0,5"/>
                             <Label Content="Bereits gesehen" VerticalAlignment="Center"/>
@@ -421,7 +549,7 @@
                         </StackPanel>
 
                         <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="tags_listbox" ItemsSource="{Binding tags}" Grid.Column="1" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="6" SelectionMode="Multiple" Margin="0,5" SelectionChanged="TagsSelectionChanged">
+                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.Row="5" SelectionMode="Multiple" Margin="0,5" SelectionChanged="TagsSelectionChanged">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel Orientation="Horizontal"/>
@@ -436,7 +564,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
 
-                        <Grid Grid.Row="7">
+                        <Grid Grid.Row="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -446,7 +574,7 @@
                             <Image x:Name="show_image_image" Source="{Binding ShowImage}" Width="100" Height="100" Grid.Row="0"/>
                             <Button Style="{StaticResource PrimaryButtonStyle}" Content="Bild öffnen" Click="SelectImage" Grid.Row="1"/>
                         </Grid>
-                        <Grid Grid.Row="8">
+                        <Grid Grid.Row="7">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -476,24 +604,21 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <Label Content="Show bearbeiten" FontSize="30" FontWeight="Bold" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Titel" x:Name="show_edit_titel_textbox" 
-                            Text="{Binding show.Name}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="1" Margin="0,5"/>
+                            Text="{Binding show.Name}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="0" Margin="0,5"/>
 
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Beschreibung" x:Name="show_edit_name_description_textbox" 
-                            Text="{Binding show.Description}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="2" Margin="0,5"/>
+                            Text="{Binding show.Description}" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" Height="auto" Grid.Row="1" Margin="0,5"/>
 
                         <TextBox Style="{StaticResource WatermarkTextBoxStyle}" local:WatermarkService.Watermark="Episoden" x:Name="show_edit_episodes_textbox" 
-                            Height="auto" Text="{Binding show.Episodes}" Grid.Row="3" Margin="0,5"/>
+                            Height="auto" Text="{Binding show.Episodes}" Grid.Row="2" Margin="0,5"/>
 
                         <DatePicker Style="{StaticResource ModernDatePickerStyle}" x:Name="show_edit_release_date_picker" SelectedDateFormat="Long" 
-                            SelectedDate="{Binding show.ReleaseDate}" Grid.Row="4" Margin="0,5"/>
+                            SelectedDate="{Binding show.ReleaseDate}" Grid.Row="3" Margin="0,5"/>
 
-                        <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="edit_tags_listbox" ItemsSource="{Binding tags}" Grid.Row="5" 
+                        <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="edit_tags_listbox" ItemsSource="{Binding tags}" Grid.Row="4" 
                             ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,5">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -514,7 +639,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
 
-                        <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="all_tags_listbox" Grid.Row="6" 
+                        <ListBox Style="{StaticResource RoundedListBoxStyle}" x:Name="all_tags_listbox" Grid.Row="5" 
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled" Margin="0,5">
                             <ListBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -535,7 +660,7 @@
                             </ListBox.ItemTemplate>
                         </ListBox>
 
-                        <Grid Grid.Row="7">
+                        <Grid Grid.Row="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
@@ -544,7 +669,7 @@
                             <Image x:Name="show_edit_image_image" Source="{Binding show.Image}" Width="100" Height="100" Grid.Row="0"/>
                             <Button Style="{StaticResource PrimaryButtonStyle}" Content="Bild öffnen" Grid.Row="1" Click="SelectNewImage"/>
                         </Grid>
-                        <Grid Grid.Row="8">
+                        <Grid Grid.Row="7">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>

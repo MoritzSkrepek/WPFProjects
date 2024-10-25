@@ -284,6 +284,18 @@ namespace WatchlistApp
                 show_edit_image_image.Source = ShowImage;
             }
         }
+
+        private void WindowSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (this.ActualWidth < 1200)
+            {
+                filter_expander.IsExpanded = false;
+            }
+            else
+            {
+                filter_expander.IsExpanded = true;
+            }
+        }
         #endregion
 
         #region Utility Methods
